@@ -1,0 +1,58 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1, viewport-fit=cover"
+    />
+    <title>产品展示</title>
+    <link rel="stylesheet" href="css/styles.css" />
+  </head>
+
+  <body>
+    <!-- 顶部品牌条 -->
+    <header class="topbar">
+      <div class="brand">WACKER</div>
+    </header>
+
+    <!-- 轮播 Banner（首页显示） -->
+    <section class="hero" id="hero">
+      <div class="carousel" aria-label="轮播图">
+        <button class="carousel-btn prev" id="btnPrev" aria-label="上一张">
+          ‹
+        </button>
+        <div class="carousel-viewport" id="carouselViewport">
+          <div class="carousel-track" id="carouselTrack">
+            <!-- slides 由 JS 注入 -->
+          </div>
+        </div>
+        <button class="carousel-btn next" id="btnNext" aria-label="下一张">
+          ›
+        </button>
+
+        <div class="carousel-dots" id="carouselDots" aria-label="轮播指示点">
+          <!-- dots 由 JS 注入 -->
+        </div>
+      </div>
+    </section>
+
+    <!-- 页面标题栏（分类页/详情页显示） -->
+    <section class="pagebar" id="pagebar" hidden>
+      <button class="back" id="backBtn" aria-label="返回">←</button>
+      <div class="pagetitle" id="pageTitle">标题</div>
+      <div class="spacer"></div>
+    </section>
+
+    <!-- 主内容容器 -->
+    <main class="container" id="app">
+      <!-- 内容由 JS 渲染 -->
+    </main>
+
+    <!-- 底部安全留白（适配刘海屏/底部手势条） -->
+    <div class="safe-bottom"></div>
+
+    <script src="js/data.js"></script>
+    <script src="js/app.js"></script>
+  </body>
+</html>
