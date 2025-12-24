@@ -2,57 +2,96 @@
 <html lang="zh-CN">
   <head>
     <meta charset="UTF-8" />
-    <meta
-      name="viewport"
-      content="width=device-width, initial-scale=1, viewport-fit=cover"
-    />
-    <title>产品展示</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
+    <meta name="theme-color" content="#ffffff" />
+    <meta name="description" content="WACKER 产品展示 - 密封胶、涂料添加剂、胶粘剂等专业化学产品" />
+    <meta name="keywords" content="WACKER,密封胶,涂料,胶粘剂,建材,纺织,化学品" />
+    
+    <!-- iOS 优化 -->
+    <meta name="apple-mobile-web-app-capable" content="yes" />
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+    <meta name="apple-mobile-web-app-title" content="WACKER" />
+    
+    <!-- 性能优化 -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
+    
+    <title>产品展示 - WACKER</title>
     <link rel="stylesheet" href="css/styles.css" />
+    
+    <!-- 预加载关键资源 -->
+    <link rel="preload" href="js/data.js" as="script" />
+    <link rel="preload" href="js/app.js" as="script" />
   </head>
 
   <body>
     <!-- 顶部品牌条 -->
-    <header class="topbar">
+    <header class="topbar" role="banner">
       <div class="brand">WACKER</div>
     </header>
 
     <!-- 轮播 Banner（首页显示） -->
-    <section class="hero" id="hero">
-      <div class="carousel" aria-label="轮播图">
-        <button class="carousel-btn prev" id="btnPrev" aria-label="上一张">
+    <section class="hero" id="hero" role="region" aria-label="产品轮播">
+      <div class="carousel">
+        <button class="carousel-btn prev" id="btnPrev" aria-label="上一张" type="button">
           ‹
         </button>
         <div class="carousel-viewport" id="carouselViewport">
-          <div class="carousel-track" id="carouselTrack">
+          <div class="carousel-track" id="carouselTrack" role="list">
             <!-- slides 由 JS 注入 -->
           </div>
         </div>
-        <button class="carousel-btn next" id="btnNext" aria-label="下一张">
+        <button class="carousel-btn next" id="btnNext" aria-label="下一张" type="button">
           ›
         </button>
 
-        <div class="carousel-dots" id="carouselDots" aria-label="轮播指示点">
+        <div class="carousel-dots" id="carouselDots" role="tablist" aria-label="轮播指示点">
           <!-- dots 由 JS 注入 -->
         </div>
       </div>
     </section>
 
     <!-- 页面标题栏（分类页/详情页显示） -->
-    <section class="pagebar" id="pagebar" hidden>
-      <button class="back" id="backBtn" aria-label="返回">←</button>
-      <div class="pagetitle" id="pageTitle">标题</div>
+    <nav class="pagebar" id="pagebar" hidden aria-label="页面导航">
+      <button class="back" id="backBtn" aria-label="返回" type="button">←</button>
+      <h1 class="pagetitle" id="pageTitle">标题</h1>
       <div class="spacer"></div>
-    </section>
+    </nav>
 
     <!-- 主内容容器 -->
-    <main class="container" id="app">
+    <main class="container has-bottom-nav" id="app" role="main">
       <!-- 内容由 JS 渲染 -->
     </main>
 
-    <!-- 底部安全留白（适配刘海屏/底部手势条） -->
-    <div class="safe-bottom"></div>
+    <!-- 固定底部导航栏 -->
+    <nav class="bottom-nav" id="bottomNav" aria-label="底部导航">
+      <a href="#/" class="bottom-nav-item" id="navHome" aria-label="首页">
+        <div class="nav-icon">🏠</div>
+        <div class="nav-label">首页</div>
+      </a>
+      <button class="bottom-nav-item" id="navBack" aria-label="返回上一页" type="button" style="display:none;">
+        <div class="nav-icon">←</div>
+        <div class="nav-label">返回</div>
+      </button>
+    </nav>
 
+    <!-- 底部安全留白（适配刘海屏/底部手势条） -->
+    <div class="safe-bottom" style="display:none;"></div>
+
+    <!-- 脚本加载 -->
     <script src="js/data.js"></script>
     <script src="js/app.js"></script>
+    
+    <!-- 错误边界 -->
+    <script>
+      window.addEventListener('error', function(e) {
+        console.error('全局错误:', e.error);
+        // 可以在这里添加错误上报逻辑
+      });
+      
+      window.addEventListener('unhandledrejection', function(e) {
+        console.error('未处理的 Promise 拒绝:', e.reason);
+      });
+    </script>
   </body>
 </html>
