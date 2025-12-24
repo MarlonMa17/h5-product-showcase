@@ -1199,3 +1199,117 @@ body {
     font-size: 18px;
   }
 }
+
+/* PDF产品名称标签 */
+.pdf-product {
+  display: inline-block;
+  font-size: 10px;
+  color: var(--primary);
+  background: rgba(255, 102, 0, 0.1);
+  padding: 2px 8px;
+  border-radius: 4px;
+  margin-bottom: 4px;
+  font-weight: 600;
+}
+
+/* ========== PDF文档网格样式 ========== */
+.pdf-section {
+  padding: 16px;
+  margin-top: 24px;
+}
+
+.section-title {
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 16px;
+  padding-left: 4px;
+}
+
+.pdf-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.pdf-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 20px 12px;
+  text-decoration: none;
+  color: var(--text);
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+  min-height: 140px;
+}
+
+.pdf-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+  border-color: var(--primary);
+}
+
+.pdf-card:active {
+  transform: translateY(0) scale(0.98);
+}
+
+.pdf-card-icon {
+  font-size: 48px;
+  margin-bottom: 12px;
+}
+
+.pdf-card-body {
+  width: 100%;
+  text-align: center;
+}
+
+.pdf-card-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  line-height: 1.4;
+  margin-bottom: 8px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.pdf-card-product {
+  display: inline-block;
+  font-size: 10px;
+  color: var(--primary);
+  background: rgba(255, 102, 0, 0.1);
+  padding: 3px 8px;
+  border-radius: 4px;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.pdf-card-size {
+  font-size: 11px;
+  color: var(--muted);
+  margin-top: 4px;
+}
+
+/* 响应式 - 小屏幕单列 */
+@media (max-width: 360px) {
+  .pdf-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+/* 响应式 - 大屏幕3列 */
+@media (min-width: 768px) {
+  .pdf-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}

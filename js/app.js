@@ -395,8 +395,7 @@
     });
   }
 
-  // 内容页（如公司介绍）
-  // 产品列表页
+  // 产品列表页（包含产品和PDF文档）
   function renderCategory(catId) {
     const cat = findCategory(catId);
     if (!cat) {
@@ -406,6 +405,20 @@
 
     simulateLoading(() => {
       setHeaderMode("inner", cat.name);
+
+      // 收集该分类下所有产品的PDF
+      const allPdfs = [];
+      cat.products.forEach(product => {
+        if (product.pdfs && product.pdfs.length > 0) {
+          product.pdfs.forEach(pdf => {
+            allPdfs.push({
+              ...pdf,
+              productName: product.name,
+              productId: product.id
+            });
+          });
+        }
+      });
 
       const html = `
         <!-- 顶部场景大图 -->
@@ -433,6 +446,25 @@
             )
             .join("")}
         </div>
+
+        <!-- PDF文档网格 -->
+        ${allPdfs.length > 0 ? `
+        <section class="pdf-section">
+          <h2 class="section-title">📄 产品文档</h2>
+          <div class="pdf-grid">
+            ${allPdfs.map(pdf => `
+              <a class="pdf-card" href="${htmlesc(pdf.file)}" target="_blank" aria-label="查看${htmlesc(pdf.title)}">
+                <div class="pdf-card-icon">📄</div>
+                <div class="pdf-card-body">
+                  <div class="pdf-card-title">${htmlesc(pdf.title)}</div>
+                  ${pdf.productName ? `<div class="pdf-card-product">${htmlesc(pdf.productName)}</div>` : ''}
+                  ${pdf.size ? `<div class="pdf-card-size">${htmlesc(pdf.size)}</div>` : ''}
+                </div>
+              </a>
+            `).join('')}
+          </div>
+        </section>
+        ` : ''}
       `;
       app.innerHTML = html;
       scrollToTop(false);
@@ -441,14 +473,17 @@
       document.querySelectorAll(".product-card").forEach((item) => {
         item.addEventListener("click", () => hapticFeedback("medium"));
       });
+
+      document.querySelectorAll(".pdf-item").forEach((item) => {
+        item.addEventListener("click", () => hapticFeedback("medium"));
+      });
       
       // 更新底部导航状态
       updateBottomNav();
     });
   }
 
-  // 详情页
-  // 产品详情页 - 标签切换设计
+  // 产品详情页 - 只显示视频
   function renderProduct(productId) {
     const result = findProduct(productId);
     if (!result) {
@@ -466,97 +501,38 @@
           <h1 class="h1">${htmlesc(product.name)}</h1>
           <p class="p">${htmlesc(product.desc || "")}</p>
 
-          <!-- 标签页导航 -->
-          <div class="tabs-nav">
-            <button class="tab-btn active" data-tab="videos">
-              <span class="tab-icon">🎬</span>
-              <span class="tab-text">产品视频</span>
-            </button>
-            <button class="tab-btn" data-tab="pdfs">
-              <span class="tab-icon">📄</span>
-              <span class="tab-text">产品文档</span>
-            </button>
-          </div>
-
-          <!-- 标签页内容 -->
-          <div class="tabs-content">
-            <!-- 视频标签页 -->
-            <div class="tab-pane active" id="paneVideos">
-              ${product.videos && product.videos.length > 0 ? `
-                <div class="video-list">
-                  ${product.videos.map((video, index) => `
-                    <div class="video-item" data-index="${index}">
-                      <div class="video loading" id="video-${index}">
-                        <video
-                          src="${htmlesc(video.file)}"
-                          controls
-                          playsinline
-                          webkit-playsinline
-                          preload="metadata"
-                          poster="${htmlesc(video.thumbnail || '')}"
-                        ></video>
-                      </div>
-                      <div class="video-info">
-                        <div class="video-title">${htmlesc(video.title)}</div>
-                        ${video.desc ? `<div class="video-desc">${htmlesc(video.desc)}</div>` : ''}
-                        ${video.duration ? `<div class="video-duration">⏱ ${htmlesc(video.duration)}</div>` : ''}
-                      </div>
-                    </div>
-                  `).join('')}
-                </div>
-              ` : '<div class="empty-state">暂无视频内容</div>'}
+          <!-- 产品视频 -->
+          ${product.videos && product.videos.length > 0 ? `
+            <div class="section-divider">
+              <h2 class="h2">🎬 产品视频</h2>
             </div>
-
-            <!-- 文档标签页 -->
-            <div class="tab-pane" id="panePdfs">
-              ${product.pdfs && product.pdfs.length > 0 ? `
-                <div class="pdf-list">
-                  ${product.pdfs.map(pdf => `
-                    <a class="pdf-item" href="${htmlesc(pdf.file)}" download aria-label="下载${htmlesc(pdf.title)}">
-                      <div class="pdf-icon">📥</div>
-                      <div class="pdf-info">
-                        <div class="pdf-title">${htmlesc(pdf.title)}</div>
-                        ${pdf.desc ? `<div class="pdf-desc">${htmlesc(pdf.desc)}</div>` : ''}
-                        ${pdf.size ? `<div class="pdf-size">${htmlesc(pdf.size)}</div>` : ''}
-                      </div>
-                      <div class="pdf-arrow">→</div>
-                    </a>
-                  `).join('')}
+            <div class="video-list">
+              ${product.videos.map((video, index) => `
+                <div class="video-item" data-index="${index}">
+                  <div class="video loading" id="video-${index}">
+                    <video
+                      src="${htmlesc(video.file)}"
+                      controls
+                      playsinline
+                      webkit-playsinline
+                      preload="metadata"
+                      poster="${htmlesc(video.thumbnail || '')}"
+                    ></video>
+                  </div>
+                  <div class="video-info">
+                    <div class="video-title">${htmlesc(video.title)}</div>
+                    ${video.desc ? `<div class="video-desc">${htmlesc(video.desc)}</div>` : ''}
+                    ${video.duration ? `<div class="video-duration">⏱ ${htmlesc(video.duration)}</div>` : ''}
+                  </div>
                 </div>
-              ` : '<div class="empty-state">暂无文档资料</div>'}
+              `).join('')}
             </div>
-          </div>
+          ` : '<div class="empty-state">暂无视频内容</div>'}
         </section>
       `;
       app.innerHTML = html;
       scrollToTop(false);
       updateBottomNav();
-
-      // 标签切换功能
-      const tabBtns = document.querySelectorAll('.tab-btn');
-      const tabPanes = document.querySelectorAll('.tab-pane');
-      
-      tabBtns.forEach(btn => {
-        btn.addEventListener('click', () => {
-          const tabName = btn.getAttribute('data-tab');
-          
-          // 更新按钮状态
-          tabBtns.forEach(b => b.classList.remove('active'));
-          btn.classList.add('active');
-          
-          // 更新内容显示
-          tabPanes.forEach(pane => {
-            if (pane.id === `pane${tabName.charAt(0).toUpperCase() + tabName.slice(1)}`) {
-              pane.classList.add('active');
-            } else {
-              pane.classList.remove('active');
-            }
-          });
-          
-          // 触感反馈
-          hapticFeedback('light');
-        });
-      });
 
       // 视频加载状态管理
       if (product.videos) {
