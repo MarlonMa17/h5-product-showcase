@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>产品列表 - UZIN优成</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 类目头图 -->
+        <div class="category-header">
+            <img src="../assets/images/pdf/products/头图.png" alt="自流平">
+            <div class="category-title">
+                <h2>自流平</h2>
+            </div>
+        </div>
+
+        <!-- 产品列表 -->
+        <div class="product-grid">
+            <a href="pdf-detail.html?id=1" class="product-item">
+                <img src="../assets/images/pdf/products/1.png" alt="UZIN NC 145">
+                <h3>UZIN NC 145</h3>
+                <p>标准型自流平水泥</p>
+            </a>
+            <a href="pdf-detail.html?id=2" class="product-item">
+                <img src="../assets/images/pdf/products/2.png" alt="UZIN NC 149">
+                <h3>UZIN NC 149</h3>
+                <p>商用型自流平水泥</p>
+            </a>
+            <a href="pdf-detail.html?id=3" class="product-item">
+                <img src="../assets/images/pdf/products/3.png" alt="UZIN NC 159">
+                <h3>UZIN NC 159</h3>
+                <p>多功能型自流平水泥</p>
+            </a>
+            <a href="pdf-detail.html?id=4" class="product-item">
+                <img src="../assets/images/pdf/products/4.png" alt="UZIN NC 169">
+                <h3>UZIN NC 169</h3>
+                <p>全能型自流平水泥</p>
+            </a>
+            <a href="pdf-detail.html?id=5" class="product-item">
+                <img src="../assets/images/pdf/products/5.png" alt="UZIN NC 182">
+                <h3>UZIN NC 182</h3>
+                <p>低坍落度水泥修补砂浆</p>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // 根据URL参数动态设置标题
+        const urlParams = new URLSearchParams(window.location.search);
+        const category = urlParams.get('category');
+        if (category) {
+            const titleElement = document.querySelector('.category-title h2');
+            if (titleElement) {
+                titleElement.textContent = category;
+            }
+            document.title = category + ' - UZIN优成';
+        }
+    </script>
+</body>
+</html>

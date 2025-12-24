@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>视频分类 - UZIN优成</title>
+    <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+    <div class="container">
+        <!-- 类目标题 -->
+        <div class="video-category-title">
+            <h2>弹性地板</h2>
+        </div>
+
+        <!-- 视频分类列表 -->
+        <div class="video-category-grid">
+            <a href="video-detail.html?category=界面剂" class="video-category-item">
+                <img src="../assets/images/video/categories/1界面剂.jpg" alt="界面剂">
+                <h3>界面剂</h3>
+            </a>
+            <a href="video-detail.html?category=自流平" class="video-category-item">
+                <img src="../assets/images/video/categories/2自流平.png" alt="自流平">
+                <h3>自流平</h3>
+            </a>
+            <a href="video-detail.html?category=胶粘剂" class="video-category-item">
+                <img src="../assets/images/video/categories/3胶粘剂.png" alt="胶粘剂">
+                <h3>胶粘剂</h3>
+            </a>
+            <a href="video-detail.html?category=系统" class="video-category-item">
+                <img src="../assets/images/video/categories/4系统.jpg" alt="系统">
+                <h3>系统</h3>
+            </a>
+        </div>
+    </div>
+
+    <script>
+        // 根据URL参数动态设置标题
+        const urlParams = new URLSearchParams(window.location.search);
+        const category = urlParams.get('category');
+        if (category) {
+            const titleElement = document.querySelector('.video-category-title h2');
+            if (titleElement) {
+                titleElement.textContent = category;
+            }
+            document.title = category + ' - UZIN优成';
+        }
+    </script>
+</body>
+</html>

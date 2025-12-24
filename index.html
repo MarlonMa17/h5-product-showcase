@@ -1,89 +1,156 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="zh-CN">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, viewport-fit=cover" />
-    <meta name="theme-color" content="#ffffff" />
-    <meta name="description" content="WACKER 产品展示 - 密封胶、涂料添加剂、胶粘剂等专业化学产品" />
-    <meta name="keywords" content="WACKER,密封胶,涂料,胶粘剂,建材,纺织,化学品" />
-    
-    <!-- iOS 优化 -->
-    <meta name="apple-mobile-web-app-capable" content="yes" />
-    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-    <meta name="apple-mobile-web-app-title" content="WACKER" />
-    
-    <!-- 性能优化 -->
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
-    
-    <title>产品展示 - WACKER</title>
-    <link rel="stylesheet" href="css/styles.css" />
-    
-    <!-- 预加载关键资源 -->
-    <link rel="preload" href="js/data.js" as="script" />
-    <link rel="preload" href="js/app.js" as="script" />
-  </head>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UZIN优成 - 产品展示</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-  <body>
-    <!-- 顶部品牌条 -->
-    <header class="topbar" role="banner">
-      <div class="brand">WACKER</div>
-    </header>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
 
-    <!-- 轮播 Banner（首页显示） -->
-    <section class="hero" id="hero" role="region" aria-label="产品轮播">
-      <div class="carousel">
-        <button class="carousel-btn prev" id="btnPrev" aria-label="上一张" type="button">
-          ‹
-        </button>
-        <div class="carousel-viewport" id="carouselViewport">
-          <div class="carousel-track" id="carouselTrack" role="list">
-            <!-- slides 由 JS 注入 -->
-          </div>
+        .container {
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            padding: 60px 40px;
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 32px;
+            color: #333;
+            margin-bottom: 12px;
+            font-weight: 700;
+        }
+
+        .subtitle {
+            color: #666;
+            font-size: 16px;
+            margin-bottom: 50px;
+        }
+
+        .button-group {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .nav-button {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            padding: 25px 30px;
+            border-radius: 12px;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            border: 2px solid transparent;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .nav-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 255, 255, 0.2);
+            transition: left 0.3s ease;
+        }
+
+        .nav-button:hover::before {
+            left: 100%;
+        }
+
+        .nav-button:active {
+            transform: scale(0.98);
+        }
+
+        .pdf-button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .pdf-button:hover {
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .video-button {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+        }
+
+        .video-button:hover {
+            box-shadow: 0 8px 25px rgba(245, 87, 108, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .icon {
+            font-size: 28px;
+        }
+
+        .footer {
+            margin-top: 40px;
+            color: #999;
+            font-size: 14px;
+        }
+
+        @media (max-width: 600px) {
+            .container {
+                padding: 40px 25px;
+            }
+
+            h1 {
+                font-size: 26px;
+            }
+
+            .nav-button {
+                padding: 20px 25px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>UZIN 优成</h1>
+        <p class="subtitle">选择您要查看的内容</p>
+
+        <div class="button-group">
+            <a href="pages/pdf-home.html" class="nav-button pdf-button">
+                <span class="icon">📄</span>
+                <span>产品资料 PDF</span>
+            </a>
+
+            <a href="pages/video-home.html" class="nav-button video-button">
+                <span class="icon">🎬</span>
+                <span>产品视频介绍</span>
+            </a>
         </div>
-        <button class="carousel-btn next" id="btnNext" aria-label="下一张" type="button">
-          ›
-        </button>
 
-        <div class="carousel-dots" id="carouselDots" role="tablist" aria-label="轮播指示点">
-          <!-- dots 由 JS 注入 -->
+        <div class="footer">
+            UZIN Product Showcase
         </div>
-      </div>
-    </section>
-
-    <!-- 页面标题栏（分类页/详情页显示） -->
-    <nav class="pagebar" id="pagebar" hidden aria-label="页面导航">
-      <button class="back" id="backBtn" aria-label="返回" type="button">←</button>
-      <h1 class="pagetitle" id="pageTitle">标题</h1>
-      <div class="spacer"></div>
-    </nav>
-
-    <!-- 主内容容器 -->
-    <main class="container has-bottom-nav" id="app" role="main">
-      <!-- 内容由 JS 渲染 -->
-    </main>
-
-    <!-- 固定底部导航栏 - 动态面包屑 -->
-    <nav class="bottom-nav" id="bottomNav" aria-label="底部导航">
-      <!-- 动态生成面包屑按钮 -->
-    </nav>
-
-    <!-- 底部安全留白（适配刘海屏/底部手势条） -->
-    <div class="safe-bottom" style="display:none;"></div>
-
-    <!-- 脚本加载 -->
-    <script src="js/app.js"></script>
-    
-    <!-- 错误边界 -->
-    <script>
-      window.addEventListener('error', function(e) {
-        console.error('全局错误:', e.error);
-        // 可以在这里添加错误上报逻辑
-      });
-      
-      window.addEventListener('unhandledrejection', function(e) {
-        console.error('未处理的 Promise 拒绝:', e.reason);
-      });
-    </script>
-  </body>
+    </div>
+</body>
 </html>
