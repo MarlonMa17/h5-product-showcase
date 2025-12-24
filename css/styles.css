@@ -1313,3 +1313,1352 @@ body {
     grid-template-columns: repeat(3, 1fr);
   }
 }
+
+/* ========== PDF产品列表页样式 ========== */
+.category-header {
+  position: relative;
+  width: 100%;
+  margin-bottom: 16px;
+}
+
+.category-header-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+.category-title-wrapper {
+  position: absolute;
+  bottom: 16px;
+  left: 16px;
+  right: 16px;
+}
+
+.category-title {
+  display: inline-block;
+  padding: 8px 20px;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 700;
+  border-radius: 4px;
+}
+
+.product-list-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  padding: 16px;
+}
+
+.product-list-card {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  text-decoration: none;
+  transition: all var(--transition-fast);
+  cursor: pointer;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.product-list-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.product-list-card:active {
+  transform: scale(0.98);
+}
+
+.product-list-image {
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: #f5f7fa;
+}
+
+.product-list-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.product-list-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  color: var(--muted);
+}
+
+.product-list-info {
+  padding: 12px;
+  text-align: center;
+}
+
+.product-list-model {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 4px;
+}
+
+.product-list-name {
+  font-size: 12px;
+  color: var(--text-secondary);
+  line-height: 1.4;
+}
+
+/* ========== PDF下载页样式 ========== */
+.pdf-download-page {
+  padding: 40px 20px;
+  text-align: center;
+}
+
+.pdf-download-icon {
+  font-size: 80px;
+  margin-bottom: 20px;
+}
+
+.pdf-download-info {
+  margin-bottom: 32px;
+}
+
+.pdf-download-model {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.pdf-download-name {
+  font-size: 16px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+}
+
+.pdf-download-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  margin-top: 32px;
+}
+
+.pdf-download-item {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 20px;
+}
+
+.pdf-download-item-info {
+  margin-bottom: 16px;
+  text-align: left;
+}
+
+.pdf-download-item-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.pdf-download-item-desc {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.5;
+  margin-bottom: 6px;
+}
+
+.pdf-download-item-size {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.pdf-download-btn {
+  display: block;
+  width: 100%;
+  padding: 14px 24px;
+  background: linear-gradient(135deg, #ff6600 0%, #ff8533 100%);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 8px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 2px 8px rgba(255, 102, 0, 0.3);
+}
+
+.pdf-download-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 102, 0, 0.4);
+}
+
+.pdf-download-btn:active {
+  transform: scale(0.98);
+}
+
+.pdf-download-hint {
+  margin-top: 12px;
+  font-size: 12px;
+  color: var(--muted);
+}
+
+/* ========== 视频类目列表页样式 ========== */
+.video-topics-header {
+  padding: 20px 16px;
+  text-align: center;
+  background: linear-gradient(135deg, #f5f7fa 0%, #ffffff 100%);
+}
+
+.video-topics-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.video-topics-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+  padding: 16px;
+}
+
+.video-topic-card {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all var(--transition-fast);
+  -webkit-tap-highlight-color: transparent;
+}
+
+.video-topic-card:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transform: translateY(-2px);
+}
+
+.video-topic-card:active {
+  transform: scale(0.98);
+}
+
+.video-topic-image {
+  width: 100%;
+  aspect-ratio: 1.5;
+  overflow: hidden;
+  background: #f5f7fa;
+  position: relative;
+}
+
+.video-topic-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.video-topic-placeholder {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 48px;
+  color: var(--muted);
+}
+
+.video-topic-name {
+  padding: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  text-align: center;
+}
+
+/* ========== 视频播放页样式 ========== */
+.video-play-page {
+  padding: 16px;
+}
+
+.video-play-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: var(--text);
+  text-align: center;
+  margin-bottom: 24px;
+  padding: 16px;
+  background: linear-gradient(135deg, #f5f7fa 0%, #ffffff 100%);
+  border-radius: 12px;
+}
+
+.video-play-list {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.video-play-item {
+  background: #ffffff;
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  padding: 12px;
+}
+
+.video-play-wrapper {
+  position: relative;
+  width: 100%;
+  background: #000000;
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.video-play-item.horizontal .video-play-wrapper {
+  aspect-ratio: 16/9;
+}
+
+.video-play-item.vertical .video-play-wrapper {
+  aspect-ratio: 9/16;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
+.video-play-player {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.video-play-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: all var(--transition-fast);
+}
+
+.video-play-overlay:hover {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.video-play-btn {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 102, 0, 0.9);
+  border-radius: 50%;
+  color: #ffffff;
+  font-size: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  transition: all var(--transition-fast);
+}
+
+.video-play-overlay:hover .video-play-btn {
+  transform: scale(1.1);
+  background: rgba(255, 102, 0, 1);
+}
+
+.video-play-wrapper.loading::after {
+  content: "加载中...";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #ffffff;
+  font-size: 14px;
+}
+
+.video-play-info {
+  padding: 12px 4px;
+}
+
+.video-play-video-title {
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text);
+  margin-bottom: 6px;
+}
+
+.video-play-duration {
+  font-size: 12px;
+  color: var(--muted);
+}
+/* ========================================
+   按照设计图完全重写的样式
+   ======================================== */
+
+/* ========== PDF产品列表页 ========== */
+
+/* 顶部大图区域 */
+.category-header {
+  position: relative;
+  width: 100%;
+  margin-bottom: 0;
+}
+
+.category-header-img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* 蓝色标签（覆盖在图片上）*/
+.category-title-wrapper {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: center;
+  padding-bottom: 20px;
+}
+
+.category-title {
+  background: linear-gradient(135deg, #6b9bd1 0%, #5a8bc7 100%);
+  color: #ffffff;
+  font-size: 20px;
+  font-weight: 700;
+  padding: 12px 60px;
+  border-radius: 0;
+  text-align: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+/* 产品网格 - 2列 */
+.product-list-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+  padding: 0;
+  background: #f5f7fa;
+}
+
+/* 产品卡片 */
+.product-list-card {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border: none;
+  border-bottom: 1px solid #e8ecef;
+  border-right: 1px solid #e8ecef;
+  padding: 20px 16px;
+  text-decoration: none;
+  transition: background 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.product-list-card:active {
+  background: #f8f9fa;
+}
+
+/* 去掉最右列的右边框 */
+.product-list-card:nth-child(2n) {
+  border-right: none;
+}
+
+.product-list-image {
+  width: 100%;
+  aspect-ratio: 1;
+  overflow: hidden;
+  background: #ffffff;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.product-list-image img {
+  width: 80%;
+  height: 80%;
+  object-fit: contain;
+}
+
+.product-list-info {
+  text-align: center;
+}
+
+.product-list-model {
+  font-size: 15px;
+  font-weight: 700;
+  color: #333333;
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+
+.product-list-name {
+  font-size: 13px;
+  color: #666666;
+  line-height: 1.4;
+}
+
+/* ========== PDF下载页 ========== */
+
+.pdf-download-page {
+  padding: 60px 30px;
+  text-align: center;
+  background: #ffffff;
+  min-height: 100vh;
+}
+
+/* 大红色PDF图标 */
+.pdf-download-icon {
+  font-size: 120px;
+  margin-bottom: 30px;
+  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.1));
+}
+
+/* 产品型号 */
+.pdf-download-model {
+  font-size: 24px;
+  font-weight: 700;
+  color: #333333;
+  margin-bottom: 8px;
+  letter-spacing: 0.5px;
+}
+
+/* 产品中文名 */
+.pdf-download-name {
+  font-size: 16px;
+  color: #666666;
+  margin-bottom: 40px;
+  line-height: 1.5;
+}
+
+/* PDF列表容器 */
+.pdf-download-list {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  max-width: 500px;
+  margin: 0 auto;
+}
+
+.pdf-download-item {
+  background: #ffffff;
+  border: none;
+  padding: 0;
+}
+
+.pdf-download-item-info {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.pdf-download-item-title {
+  font-size: 16px;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 8px;
+}
+
+.pdf-download-item-desc {
+  font-size: 13px;
+  color: #999999;
+  line-height: 1.6;
+  margin-bottom: 8px;
+}
+
+.pdf-download-item-size {
+  font-size: 12px;
+  color: #999999;
+}
+
+/* 橙色下载按钮 */
+.pdf-download-btn {
+  display: block;
+  width: 100%;
+  padding: 16px 32px;
+  background: linear-gradient(135deg, #ff8533 0%, #ff6600 100%);
+  color: #ffffff;
+  font-size: 16px;
+  font-weight: 700;
+  border: none;
+  border-radius: 8px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 4px 12px rgba(255, 102, 0, 0.3);
+  letter-spacing: 0.5px;
+}
+
+.pdf-download-btn:active {
+  transform: scale(0.98);
+  box-shadow: 0 2px 8px rgba(255, 102, 0, 0.3);
+}
+
+/* 下载提示 */
+.pdf-download-hint {
+  margin-top: 10px;
+  font-size: 12px;
+  color: #999999;
+}
+
+/* ========== 视频类目列表页 ========== */
+
+/* 蓝色顶部标题栏 */
+.video-topics-header {
+  background: linear-gradient(135deg, #6b9bd1 0%, #5a8bc7 100%);
+  padding: 16px 20px;
+  text-align: center;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2px;
+}
+
+.video-topics-title {
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 1px;
+}
+
+/* 类目网格 - 2列 */
+.video-topics-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0;
+  background: #f5f7fa;
+}
+
+/* 类目卡片 */
+.video-topic-card {
+  display: flex;
+  flex-direction: column;
+  background: #ffffff;
+  border: none;
+  border-bottom: 1px solid #e8ecef;
+  border-right: 1px solid #e8ecef;
+  padding: 16px;
+  text-decoration: none;
+  transition: background 0.2s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.video-topic-card:active {
+  background: #f8f9fa;
+}
+
+.video-topic-card:nth-child(2n) {
+  border-right: none;
+}
+
+/* 类目图片 - 适配不同尺寸 */
+.video-topic-image {
+  width: 100%;
+  aspect-ratio: 1.2;
+  overflow: hidden;
+  background: #f5f7fa;
+  margin-bottom: 12px;
+  border-radius: 4px;
+}
+
+.video-topic-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 类目名称 */
+.video-topic-name {
+  text-align: center;
+  font-size: 15px;
+  font-weight: 600;
+  color: #333333;
+}
+
+/* ========== 视频播放页 ========== */
+
+.video-play-page {
+  background: #f5f7fa;
+  min-height: 100vh;
+  padding-bottom: 20px;
+}
+
+/* 蓝色顶部标题栏 */
+.video-play-title {
+  background: linear-gradient(135deg, #6b9bd1 0%, #5a8bc7 100%);
+  padding: 16px 20px;
+  text-align: center;
+  font-size: 20px;
+  font-weight: 700;
+  color: #ffffff;
+  letter-spacing: 1px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  margin-bottom: 16px;
+}
+
+/* 视频列表 */
+.video-play-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 0 16px;
+}
+
+/* 视频项 */
+.video-play-item {
+  background: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+}
+
+/* 视频容器 */
+.video-play-wrapper {
+  position: relative;
+  width: 100%;
+  background: #000000;
+  overflow: hidden;
+}
+
+/* 横版视频 */
+.video-play-item.horizontal .video-play-wrapper {
+  aspect-ratio: 16/9;
+}
+
+/* 竖版视频 */
+.video-play-item.vertical .video-play-wrapper {
+  aspect-ratio: 9/16;
+  max-width: 360px;
+  margin: 0 auto;
+}
+
+/* 视频播放器 */
+.video-play-player {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* 播放按钮覆盖层 */
+.video-play-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.4);
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.video-play-overlay:active {
+  background: rgba(0, 0, 0, 0.5);
+}
+
+/* 播放按钮 */
+.video-play-btn {
+  width: 70px;
+  height: 70px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 50%;
+  color: #333333;
+  font-size: 28px;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.3);
+  transition: transform 0.2s;
+  border: 3px solid rgba(255, 255, 255, 0.8);
+}
+
+.video-play-overlay:active .video-play-btn {
+  transform: scale(0.95);
+}
+
+/* 加载状态 */
+.video-play-wrapper.loading::after {
+  content: "加载中...";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #ffffff;
+  font-size: 14px;
+  pointer-events: none;
+}
+
+/* 视频信息 */
+.video-play-info {
+  padding: 16px;
+  background: #ffffff;
+}
+
+/* 视频标题 */
+.video-play-video-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #333333;
+  margin-bottom: 6px;
+  line-height: 1.4;
+}
+
+/* 视频时长 */
+.video-play-duration {
+  font-size: 12px;
+  color: #999999;
+}
+
+/* ========== 响应式适配 ========== */
+
+@media (max-width: 360px) {
+  .product-list-model {
+    font-size: 14px;
+  }
+  
+  .product-list-name {
+    font-size: 12px;
+  }
+  
+  .pdf-download-icon {
+    font-size: 100px;
+  }
+  
+  .pdf-download-model {
+    font-size: 20px;
+  }
+}
+
+@media (min-width: 768px) {
+  .product-list-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .video-topics-grid {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .product-list-card:nth-child(3n) {
+    border-right: none;
+  }
+  
+  .video-topic-card:nth-child(3n) {
+    border-right: none;
+  }
+}
+/* ========================================
+   像素级完全还原设计图
+   ======================================== */
+
+/* 重置页面基础样式 */
+.app {
+  background: #ffffff;
+}
+
+/* ========== PDF二级页 - 产品列表 ========== */
+
+/* 顶部区域：大图+蓝色标签 */
+.category-header {
+  position: relative;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* 大横图 */
+.category-header-img {
+  width: 100%;
+  height: auto;
+  display: block;
+  margin: 0;
+  padding: 0;
+}
+
+/* 蓝色标签条（在图片下方，不是覆盖）*/
+.category-title-wrapper {
+  position: relative;
+  width: 100%;
+  background: linear-gradient(135deg, #7ba5d8 0%, #5e8fc9 100%);
+  padding: 14px 0;
+  text-align: center;
+  margin: 0;
+}
+
+.category-title {
+  display: inline-block;
+  color: #ffffff;
+  font-size: 18px;
+  font-weight: 600;
+  padding: 0;
+  margin: 0;
+  background: transparent;
+  border-radius: 0;
+  box-shadow: none;
+}
+
+/* 产品网格 - 垂直滚动列表 */
+.product-list-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0;
+  margin: 0;
+  background: #ffffff;
+}
+
+/* 产品行 - 每行2个产品 */
+.product-list-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+/* 产品卡片 */
+.product-list-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 16px;
+  background: #ffffff;
+  border: none;
+  border-right: 1px solid #e5e5e5;
+  text-decoration: none;
+  transition: background 0.15s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.product-list-card:nth-child(2n) {
+  border-right: none;
+}
+
+.product-list-card:active {
+  background: #f8f9fa;
+}
+
+/* 产品图片容器 */
+.product-list-image {
+  width: 120px;
+  height: 140px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  background: transparent;
+}
+
+.product-list-image img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+}
+
+/* 产品信息 */
+.product-list-info {
+  text-align: center;
+  width: 100%;
+}
+
+/* 产品型号 */
+.product-list-model {
+  font-size: 15px;
+  font-weight: 700;
+  color: #333333;
+  margin: 0 0 6px 0;
+  line-height: 1.2;
+}
+
+/* 产品中文名 */
+.product-list-name {
+  font-size: 13px;
+  font-weight: 400;
+  color: #666666;
+  margin: 0;
+  line-height: 1.3;
+}
+
+/* ========== PDF三级页 - 下载页 ========== */
+
+.pdf-download-page {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 50px 30px 30px 30px;
+  background: #ffffff;
+  min-height: calc(100vh - 60px);
+  text-align: center;
+}
+
+/* 红色PDF图标 */
+.pdf-download-icon {
+  width: 100px;
+  height: 100px;
+  margin: 0 0 30px 0;
+}
+
+.pdf-download-icon svg {
+  width: 100%;
+  height: 100%;
+  filter: drop-shadow(0 2px 8px rgba(0, 0, 0, 0.1));
+}
+
+/* 产品型号 */
+.pdf-download-model {
+  font-size: 22px;
+  font-weight: 700;
+  color: #000000;
+  margin: 0 0 8px 0;
+  letter-spacing: 0.5px;
+}
+
+/* 产品中文名 */
+.pdf-download-name {
+  font-size: 15px;
+  font-weight: 400;
+  color: #666666;
+  margin: 0 0 50px 0;
+}
+
+/* PDF列表 */
+.pdf-download-list {
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 40px;
+}
+
+.pdf-download-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.pdf-download-item-info {
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.pdf-download-item-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #333333;
+  margin: 0 0 8px 0;
+}
+
+.pdf-download-item-desc {
+  font-size: 13px;
+  font-weight: 400;
+  color: #999999;
+  margin: 0 0 6px 0;
+  line-height: 1.5;
+}
+
+.pdf-download-item-size {
+  font-size: 12px;
+  font-weight: 400;
+  color: #999999;
+  margin: 0;
+}
+
+/* 橙色下载按钮 */
+.pdf-download-btn {
+  width: 100%;
+  max-width: 300px;
+  padding: 14px 24px;
+  background: linear-gradient(135deg, #ff7a33 0%, #ff5500 100%);
+  color: #ffffff;
+  font-size: 15px;
+  font-weight: 600;
+  border: none;
+  border-radius: 6px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.15s;
+  -webkit-tap-highlight-color: transparent;
+  box-shadow: 0 3px 10px rgba(255, 85, 0, 0.25);
+  display: block;
+  text-align: center;
+}
+
+.pdf-download-btn:active {
+  transform: scale(0.97);
+}
+
+/* "下载按钮"提示文字 */
+.pdf-download-hint {
+  font-size: 12px;
+  font-weight: 400;
+  color: #999999;
+  margin: 10px 0 0 0;
+}
+
+/* ========== 视频二级页 - 类目列表 ========== */
+
+/* 蓝色顶部标题栏 */
+.video-topics-header {
+  width: 100%;
+  background: linear-gradient(135deg, #7ba5d8 0%, #5e8fc9 100%);
+  padding: 14px 20px;
+  text-align: center;
+  margin: 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+}
+
+.video-topics-title {
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0;
+  letter-spacing: 0.5px;
+}
+
+/* 类目网格 */
+.video-topics-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 0;
+  padding: 0;
+  margin: 0;
+  background: #ffffff;
+}
+
+/* 类目行 */
+.video-topics-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+/* 类目卡片 */
+.video-topic-card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 24px 16px;
+  background: #ffffff;
+  border: none;
+  border-right: 1px solid #e5e5e5;
+  text-decoration: none;
+  transition: background 0.15s;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.video-topic-card:nth-child(2n) {
+  border-right: none;
+}
+
+.video-topic-card:active {
+  background: #f8f9fa;
+}
+
+/* 类目图片 */
+.video-topic-image {
+  width: 140px;
+  height: 100px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 12px;
+  background: #f5f5f5;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.video-topic-image img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* 类目名称 */
+.video-topic-name {
+  font-size: 15px;
+  font-weight: 600;
+  color: #333333;
+  margin: 0;
+  text-align: center;
+}
+
+/* ========== 视频三级页 - 播放页 ========== */
+
+.video-play-page {
+  background: #f5f5f5;
+  min-height: 100vh;
+  padding: 0;
+}
+
+/* 蓝色顶部标题栏 */
+.video-play-title {
+  width: 100%;
+  background: linear-gradient(135deg, #7ba5d8 0%, #5e8fc9 100%);
+  padding: 14px 20px;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 16px 0;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
+  letter-spacing: 0.5px;
+}
+
+/* 视频列表 */
+.video-play-list {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  padding: 0 16px 20px 16px;
+}
+
+/* 视频项 */
+.video-play-item {
+  background: #ffffff;
+  border-radius: 8px;
+  overflow: hidden;
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.08);
+}
+
+/* 视频容器 */
+.video-play-wrapper {
+  position: relative;
+  width: 100%;
+  background: #000000;
+  overflow: hidden;
+}
+
+/* 横版视频 */
+.video-play-item.horizontal .video-play-wrapper {
+  aspect-ratio: 16/9;
+}
+
+/* 竖版视频 */
+.video-play-item.vertical .video-play-wrapper {
+  aspect-ratio: 9/16;
+  max-width: 360px;
+  margin: 0 auto;
+}
+
+/* 视频元素 */
+.video-play-player {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+/* 播放按钮覆盖层 */
+.video-play-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.3);
+  cursor: pointer;
+  transition: background 0.15s;
+}
+
+.video-play-overlay:active {
+  background: rgba(0, 0, 0, 0.4);
+}
+
+/* 大白色播放按钮 */
+.video-play-btn {
+  width: 64px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(255, 255, 255, 0.95);
+  border-radius: 50%;
+  color: #333333;
+  font-size: 24px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.25);
+  border: 3px solid rgba(255, 255, 255, 0.9);
+  transition: transform 0.15s;
+}
+
+.video-play-overlay:active .video-play-btn {
+  transform: scale(0.93);
+}
+
+/* 加载状态 */
+.video-play-wrapper.loading::after {
+  content: "加载中...";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #ffffff;
+  font-size: 13px;
+  pointer-events: none;
+}
+
+/* 视频信息区域 */
+.video-play-info {
+  padding: 14px 16px;
+  background: #ffffff;
+}
+
+/* 视频标题 */
+.video-play-video-title {
+  font-size: 15px;
+  font-weight: 600;
+  color: #333333;
+  margin: 0 0 6px 0;
+  line-height: 1.4;
+}
+
+/* 视频时长 */
+.video-play-duration {
+  font-size: 12px;
+  font-weight: 400;
+  color: #999999;
+  margin: 0;
+}
+
+/* ========== 响应式 ========== */
+
+@media (max-width: 360px) {
+  .product-list-image {
+    width: 100px;
+    height: 120px;
+  }
+  
+  .video-topic-image {
+    width: 120px;
+    height: 90px;
+  }
+}
+
+@media (min-width: 768px) {
+  .product-list-row {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .video-topics-row {
+    grid-template-columns: repeat(3, 1fr);
+  }
+  
+  .product-list-card:nth-child(3n) {
+    border-right: none;
+  }
+  
+  .video-topic-card:nth-child(3n) {
+    border-right: none;
+  }
+}

@@ -17,15 +17,50 @@
     {
       "id": "sealant",
       "name": "密封胶系列",
+      "nameCN": "密封胶系列",
       "icon": "🧴",
       "desc": "建筑密封 / 防水材料",
       "banner": "assets/img/sealant-banner.jpg",
+      "headerImage": "assets/img/sealant-header.jpg",
+      "colorBlock": "#1e5aa8",
+      "videoTopics": [
+        {
+          "id": "jiemianji",
+          "name": "界面剂",
+          "image": "assets/img/topic-jiemianji.jpg",
+          "videos": [
+            {
+              "title": "界面剂施工演示",
+              "file": "assets/video/jiemianji-demo.mp4",
+              "thumbnail": "assets/img/video-jiemianji-thumb.jpg",
+              "duration": "3:25",
+              "orientation": "horizontal"
+            }
+          ]
+        },
+        {
+          "id": "ziliuping",
+          "name": "自流平",
+          "image": "assets/img/topic-ziliuping.jpg",
+          "videos": [
+            {
+              "title": "自流平施工流程",
+              "file": "assets/video/ziliuping-demo.mp4",
+              "thumbnail": "assets/img/video-ziliuping-thumb.jpg",
+              "duration": "5:12",
+              "orientation": "horizontal"
+            }
+          ]
+        }
+      ],
       "products": [
         {
           "id": "sealant-101",
           "name": "SILRES® Sealant 101",
+          "nameCN": "标准型自流平水泥",
+          "model": "UZIN NC 145",
           "image": "assets/img/product-sealant-101.jpg",
-          "desc": "适用于建筑密封与防水的高性能产品，具有优异的耐候性和粘接力。适合幕墙、门窗、屋面等部位的密封防水。",
+          "desc": "适用于建筑密封与防水的高性能产品",
           "pdfs": [
             {
               "title": "技术规格书",
@@ -38,71 +73,21 @@
               "desc": "施工方法和注意事项",
               "file": "assets/pdf/sealant-101-manual.pdf",
               "size": "1.8 MB"
-            },
-            {
-              "title": "安全数据表 (MSDS)",
-              "desc": "产品安全信息和应急措施",
-              "file": "assets/pdf/sealant-101-msds.pdf",
-              "size": "0.9 MB"
-            }
-          ],
-          "videos": [
-            {
-              "title": "产品介绍",
-              "desc": "产品特性和应用领域介绍",
-              "file": "assets/video/sealant-101-intro.mp4",
-              "duration": "3:25",
-              "thumbnail": "assets/img/video-thumb-1.jpg"
-            },
-            {
-              "title": "施工演示",
-              "desc": "标准施工流程演示",
-              "file": "assets/video/sealant-101-demo.mp4",
-              "duration": "5:12",
-              "thumbnail": "assets/img/video-thumb-2.jpg"
-            },
-            {
-              "title": "应用案例",
-              "desc": "实际工程应用案例展示",
-              "file": "assets/video/sealant-101-case.mp4",
-              "duration": "4:30",
-              "thumbnail": "assets/img/video-thumb-3.jpg"
             }
           ]
         },
         {
           "id": "sealant-102",
           "name": "SILRES® Sealant 102",
+          "nameCN": "商用型自流平水泥",
+          "model": "UZIN NC 149",
           "image": "assets/img/product-sealant-102.jpg",
-          "desc": "耐候性更强，适配多种基材，适用于苛刻环境下的密封应用。特别适合高层建筑和沿海地区使用。",
+          "desc": "高强度商用密封胶",
           "pdfs": [
             {
               "title": "技术规格书",
-              "desc": "产品技术参数和性能指标",
               "file": "assets/pdf/sealant-102-specs.pdf",
               "size": "2.1 MB"
-            },
-            {
-              "title": "使用说明书",
-              "desc": "施工方法和注意事项",
-              "file": "assets/pdf/sealant-102-manual.pdf",
-              "size": "1.6 MB"
-            }
-          ],
-          "videos": [
-            {
-              "title": "产品介绍",
-              "desc": "产品特性和应用领域介绍",
-              "file": "assets/video/sealant-102-intro.mp4",
-              "duration": "3:15",
-              "thumbnail": "assets/img/video-thumb-1.jpg"
-            },
-            {
-              "title": "施工演示",
-              "desc": "标准施工流程演示",
-              "file": "assets/video/sealant-102-demo.mp4",
-              "duration": "4:50",
-              "thumbnail": "assets/img/video-thumb-2.jpg"
             }
           ]
         }
@@ -111,30 +96,25 @@
     {
       "id": "coating",
       "name": "涂料添加剂",
+      "nameCN": "涂料添加剂",
       "icon": "🎨",
-      "desc": "性能提升 / 流平消泡",
+      "desc": "涂料助剂 / 性能改进",
       "banner": "assets/img/coating-banner.jpg",
+      "headerImage": "assets/img/coating-header.jpg",
+      "colorBlock": "#f39c12",
+      "videoTopics": [],
       "products": [
         {
-          "id": "coat-201",
-          "name": "VINNAPAS® Additive 201",
+          "id": "coating-201",
+          "name": "VINNAPAS® Coating 201",
+          "nameCN": "水性涂料添加剂",
+          "model": "VC 201",
           "image": "assets/img/product-coating-201.jpg",
-          "desc": "提升涂膜性能与施工体验，增强耐擦洗性能和表面流平效果。",
           "pdfs": [
             {
-              "title": "产品技术手册",
-              "desc": "详细技术参数和应用指南",
-              "file": "assets/pdf/coating-201-manual.pdf",
-              "size": "2.0 MB"
-            }
-          ],
-          "videos": [
-            {
-              "title": "产品介绍",
-              "desc": "产品特性介绍",
-              "file": "assets/video/coating-201-intro.mp4",
-              "duration": "2:50",
-              "thumbnail": "assets/img/video-thumb-1.jpg"
+              "title": "技术规格书",
+              "file": "assets/pdf/coating-201-specs.pdf",
+              "size": "1.9 MB"
             }
           ]
         }
@@ -143,130 +123,50 @@
     {
       "id": "adhesive",
       "name": "胶粘剂系列",
+      "nameCN": "胶粘剂系列",
       "icon": "🧩",
-      "desc": "工业粘接 / 家装应用",
+      "desc": "工业粘接 / 结构胶",
       "banner": "assets/img/adhesive-banner.jpg",
-      "products": [
-        {
-          "id": "adh-301",
-          "name": "VINNAPAS® Adhesive 301",
-          "image": "assets/img/product-adhesive-301.jpg",
-          "desc": "高强度粘接方案，适用工业与家装，具有优异的初粘力和持久粘接性。",
-          "pdfs": [
-            {
-              "title": "技术规格书",
-              "desc": "产品技术参数",
-              "file": "assets/pdf/adhesive-301-specs.pdf",
-              "size": "1.5 MB"
-            }
-          ],
-          "videos": [
-            {
-              "title": "产品演示",
-              "desc": "粘接效果演示",
-              "file": "assets/video/adhesive-301-demo.mp4",
-              "duration": "3:00",
-              "thumbnail": "assets/img/video-thumb-2.jpg"
-            }
-          ]
-        }
-      ]
+      "headerImage": "assets/img/adhesive-header.jpg",
+      "colorBlock": "#e74c3c",
+      "videoTopics": [],
+      "products": []
     },
     {
       "id": "construction",
       "name": "建材体系",
+      "nameCN": "建材体系",
       "icon": "🧱",
-      "desc": "砂浆 / 自流平材料",
+      "desc": "建筑材料 / 系统方案",
       "banner": "assets/img/construction-banner.jpg",
-      "products": [
-        {
-          "id": "con-401",
-          "name": "VINNAPAS® 401",
-          "image": "assets/img/product-construction-401.jpg",
-          "desc": "改善砂浆和自流平材料的综合性能，提高施工性和最终强度。",
-          "pdfs": [
-            {
-              "title": "产品手册",
-              "desc": "使用指南",
-              "file": "assets/pdf/construction-401-manual.pdf",
-              "size": "1.8 MB"
-            }
-          ],
-          "videos": [
-            {
-              "title": "施工指南",
-              "desc": "施工流程",
-              "file": "assets/video/construction-401-guide.mp4",
-              "duration": "4:00",
-              "thumbnail": "assets/img/video-thumb-3.jpg"
-            }
-          ]
-        }
-      ]
+      "headerImage": "assets/img/construction-header.jpg",
+      "colorBlock": "#95a5a6",
+      "videoTopics": [],
+      "products": []
     },
     {
       "id": "textile",
       "name": "纺织化学品",
+      "nameCN": "纺织化学品",
       "icon": "🧵",
-      "desc": "纺织贴合 / 涂层方案",
+      "desc": "纺织助剂 / 功能整理",
       "banner": "assets/img/textile-banner.jpg",
-      "products": [
-        {
-          "id": "tex-501",
-          "name": "VINNAPAS® Textile 501",
-          "image": "assets/img/product-textile-501.jpg",
-          "desc": "用于纺织品贴合的高性能乳液方案，保持织物柔软手感。",
-          "pdfs": [
-            {
-              "title": "产品说明",
-              "desc": "应用指南",
-              "file": "assets/pdf/textile-501-guide.pdf",
-              "size": "1.2 MB"
-            }
-          ],
-          "videos": [
-            {
-              "title": "应用介绍",
-              "desc": "纺织应用",
-              "file": "assets/video/textile-501-intro.mp4",
-              "duration": "2:30",
-              "thumbnail": "assets/img/video-thumb-1.jpg"
-            }
-          ]
-        }
-      ]
+      "headerImage": "assets/img/textile-header.jpg",
+      "colorBlock": "#3498db",
+      "videoTopics": [],
+      "products": []
     },
     {
-      "id": "special",
+      "id": "specialty",
       "name": "特种化学品",
+      "nameCN": "特种化学品",
       "icon": "⚗️",
-      "desc": "定制化解决方案",
-      "banner": "assets/img/special-banner.jpg",
-      "products": [
-        {
-          "id": "sp-601",
-          "name": "WACKER Special 601",
-          "image": "assets/img/product-special-601.jpg",
-          "desc": "面向特定行业的定制化产品组合，可根据客户需求调整配方。",
-          "pdfs": [
-            {
-              "title": "产品概述",
-              "desc": "定制方案",
-              "file": "assets/pdf/special-601-overview.pdf",
-              "size": "2.2 MB"
-            }
-          ],
-          "videos": [
-            {
-              "title": "产品介绍",
-              "desc": "特种应用",
-              "file": "assets/video/special-601-intro.mp4",
-              "duration": "3:40",
-              "thumbnail": "assets/img/video-thumb-2.jpg"
-            }
-          ]
-        }
-      ]
+      "desc": "特种材料 / 定制方案",
+      "banner": "assets/img/specialty-banner.jpg",
+      "headerImage": "assets/img/specialty-header.jpg",
+      "colorBlock": "#9b59b6",
+      "videoTopics": [],
+      "products": []
     }
   ]
 }

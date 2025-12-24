@@ -359,17 +359,29 @@
 
   // ========== 页面渲染 ==========
 
-  // 首页 - 6个产品分类
-  function renderHome() {
+  // 首页 - 支持两种模式
+  function renderHome(mode = 'pdf') {
     simulateLoading(() => {
       setHeaderMode("home");
+      
+      let categories = DATA.categories;
+      let title = "产品分类";
+      
+      // 视频模式：只显示有视频类目的分类
+      if (mode === 'video') {
+        categories = DATA.categories.filter(cat => 
+          cat.videoTopics && cat.videoTopics.length > 0
+        );
+        title = "产品视频";
+      }
+      
       const html = `
-        <section class="grid" aria-label="产品分类">
-          <div class="grid-items">
-            ${DATA.categories
+        <section class="grid" aria-label="${title}">
+          <div class="grid-items" style="grid-template-columns: repeat(2, 1fr);">
+            ${categories
               .map(
                 (cat) => `
-                <a class="grid-item" href="#/category/${htmlesc(cat.id)}" aria-label="进入${htmlesc(cat.name)}">
+                <a class="grid-item" href="#/${mode === 'video' ? 'video-topics' : 'pdf-category'}/${htmlesc(cat.id)}" aria-label="进入${htmlesc(cat.name)}">
                   <div class="iconbox" aria-hidden="true">
                     <div style="font-size:22px">${htmlesc(cat.icon || "📦")}</div>
                   </div>
@@ -395,7 +407,7 @@
     });
   }
 
-  // 产品列表页（包含产品和PDF文档）
+  // PDF产品列表页 - 只显示产品网格
   function renderCategory(catId) {
     const cat = findCategory(catId);
     if (!cat) {
@@ -406,75 +418,50 @@
     simulateLoading(() => {
       setHeaderMode("inner", cat.name);
 
-      // 收集该分类下所有产品的PDF
-      const allPdfs = [];
-      cat.products.forEach(product => {
-        if (product.pdfs && product.pdfs.length > 0) {
-          product.pdfs.forEach(pdf => {
-            allPdfs.push({
-              ...pdf,
-              productName: product.name,
-              productId: product.id
-            });
-          });
-        }
-      });
+      // 将产品分组，每行2个
+      const products = cat.products || [];
+      const rows = [];
+      for (let i = 0; i < products.length; i += 2) {
+        rows.push(products.slice(i, i + 2));
+      }
 
       const html = `
-        <!-- 顶部场景大图 -->
-        ${cat.banner ? `
-        <div class="product-banner">
-          <img src="${htmlesc(cat.banner)}" alt="${htmlesc(cat.name)}" />
-          <div class="product-banner-title">${htmlesc(cat.name)}</div>
-        </div>
-        ` : `<h1 class="h1" style="margin: 16px 16px 8px;">${htmlesc(cat.name)}</h1>`}
-        
-        <!-- 产品网格 -->
-        <div class="product-grid">
-          ${cat.products
-            .map(
-              (p) => `
-              <a class="product-card" href="#/category/${htmlesc(catId)}/${htmlesc(p.id)}" aria-label="查看${htmlesc(p.name)}详情">
-                <div class="product-card-image">
-                  ${p.image ? `<img src="${htmlesc(p.image)}" alt="${htmlesc(p.name)}" />` : `<div style="display:grid; place-items:center; height:100%; color:var(--muted);">📦</div>`}
-                </div>
-                <div class="product-card-body">
-                  <div class="product-card-title">${htmlesc(p.name)}</div>
-                </div>
-              </a>
-            `
-            )
-            .join("")}
-        </div>
-
-        <!-- PDF文档网格 -->
-        ${allPdfs.length > 0 ? `
-        <section class="pdf-section">
-          <h2 class="section-title">📄 产品文档</h2>
-          <div class="pdf-grid">
-            ${allPdfs.map(pdf => `
-              <a class="pdf-card" href="${htmlesc(pdf.file)}" target="_blank" aria-label="查看${htmlesc(pdf.title)}">
-                <div class="pdf-card-icon">📄</div>
-                <div class="pdf-card-body">
-                  <div class="pdf-card-title">${htmlesc(pdf.title)}</div>
-                  ${pdf.productName ? `<div class="pdf-card-product">${htmlesc(pdf.productName)}</div>` : ''}
-                  ${pdf.size ? `<div class="pdf-card-size">${htmlesc(pdf.size)}</div>` : ''}
-                </div>
-              </a>
-            `).join('')}
+        <!-- 顶部大图 + 蓝色标签 -->
+        <div class="category-header">
+          ${cat.headerImage ? `
+            <img src="${htmlesc(cat.headerImage)}" alt="${htmlesc(cat.name)}" class="category-header-img" />
+          ` : ''}
+          <div class="category-title-wrapper">
+            <div class="category-title">${htmlesc(cat.nameCN || cat.name)}</div>
           </div>
-        </section>
-        ` : ''}
+        </div>
+        
+        <!-- 产品网格（按行排列）-->
+        ${products.length > 0 ? `
+        <div class="product-list-grid">
+          ${rows.map(row => `
+            <div class="product-list-row">
+              ${row.map(p => `
+                <a class="product-list-card" href="#/pdf-download/${htmlesc(catId)}/${htmlesc(p.id)}" aria-label="查看${htmlesc(p.name)}">
+                  <div class="product-list-image">
+                    ${p.image ? `<img src="${htmlesc(p.image)}" alt="${htmlesc(p.name)}" />` : ''}
+                  </div>
+                  <div class="product-list-info">
+                    <div class="product-list-model">${htmlesc(p.model || p.name)}</div>
+                    <div class="product-list-name">${htmlesc(p.nameCN || p.name)}</div>
+                  </div>
+                </a>
+              `).join('')}
+            </div>
+          `).join('')}
+        </div>
+        ` : '<div class="empty-state" style="padding: 60px 20px;">该分类暂无产品</div>'}
       `;
       app.innerHTML = html;
       scrollToTop(false);
 
       // 添加点击反馈
-      document.querySelectorAll(".product-card").forEach((item) => {
-        item.addEventListener("click", () => hapticFeedback("medium"));
-      });
-
-      document.querySelectorAll(".pdf-item").forEach((item) => {
+      document.querySelectorAll(".product-list-card").forEach((item) => {
         item.addEventListener("click", () => hapticFeedback("medium"));
       });
       
@@ -483,8 +470,8 @@
     });
   }
 
-  // 产品详情页 - 只显示视频
-  function renderProduct(productId) {
+  // PDF下载页 - 显示PDF文件列表和下载按钮
+  function renderPdfDownload(catId, productId) {
     const result = findProduct(productId);
     if (!result) {
       renderNotFound("未找到该产品");
@@ -494,22 +481,143 @@
     const { category, product } = result;
 
     simulateLoading(() => {
-      setHeaderMode("inner", product.name);
+      setHeaderMode("inner", product.nameCN || product.name);
 
       const html = `
-        <section class="card">
-          <h1 class="h1">${htmlesc(product.name)}</h1>
-          <p class="p">${htmlesc(product.desc || "")}</p>
+        <section class="pdf-download-page">
+          <!-- 大红色PDF图标 -->
+          <div class="pdf-download-icon">
+            <svg width="120" height="120" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+              <path d="M14 2H6C5.46957 2 4.96086 2.21071 4.58579 2.58579C4.21071 2.96086 4 3.46957 4 4V20C4 20.5304 4.21071 21.0391 4.58579 21.4142C4.96086 21.7893 5.46957 22 6 22H18C18.5304 22 19.0391 21.7893 19.4142 21.4142C19.7893 21.0391 20 20.5304 20 20V8L14 2Z" fill="#DC3545" stroke="#DC3545" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M14 2V8H20" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M10 13H8" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M10 17H8" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M16 13H12" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+              <path d="M16 17H12" stroke="white" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+            </svg>
+          </div>
+          
+          <!-- 产品信息 -->
+          <div class="pdf-download-info">
+            <div class="pdf-download-model">${htmlesc(product.model || product.name)}</div>
+            <div class="pdf-download-name">${htmlesc(product.nameCN || product.name)}</div>
+          </div>
 
-          <!-- 产品视频 -->
-          ${product.videos && product.videos.length > 0 ? `
-            <div class="section-divider">
-              <h2 class="h2">🎬 产品视频</h2>
+          <!-- PDF文件列表 -->
+          ${product.pdfs && product.pdfs.length > 0 ? `
+            <div class="pdf-download-list">
+              ${product.pdfs.map((pdf, index) => `
+                <div class="pdf-download-item">
+                  <div class="pdf-download-item-info">
+                    <div class="pdf-download-item-title">${htmlesc(pdf.title)}</div>
+                    ${pdf.desc ? `<div class="pdf-download-item-desc">${htmlesc(pdf.desc)}</div>` : ''}
+                    ${pdf.size ? `<div class="pdf-download-item-size">${htmlesc(pdf.size)}</div>` : ''}
+                  </div>
+                  <a href="${htmlesc(pdf.file)}" target="_blank" class="pdf-download-btn" aria-label="下载${htmlesc(pdf.title)}">
+                    点击下载产品说明书
+                  </a>
+                  <div class="pdf-download-hint">下载按钮</div>
+                </div>
+              `).join('')}
             </div>
-            <div class="video-list">
-              ${product.videos.map((video, index) => `
-                <div class="video-item" data-index="${index}">
-                  <div class="video loading" id="video-${index}">
+          ` : '<div class="empty-state">暂无文档资料</div>'}
+        </section>
+      `;
+      app.innerHTML = html;
+      scrollToTop(false);
+      updateBottomNav();
+
+      // 添加点击反馈
+      document.querySelectorAll(".pdf-download-btn").forEach((btn) => {
+        btn.addEventListener("click", () => hapticFeedback("medium"));
+      });
+    });
+  }
+
+  // 视频类目列表页 - 显示该分类下的视频类目
+  function renderVideoTopics(catId) {
+    const cat = findCategory(catId);
+    if (!cat) {
+      renderNotFound("未找到该产品类型");
+      return;
+    }
+
+    const videoTopics = cat.videoTopics || [];
+    
+    // 将类目分组，每行2个
+    const rows = [];
+    for (let i = 0; i < videoTopics.length; i += 2) {
+      rows.push(videoTopics.slice(i, i + 2));
+    }
+
+    simulateLoading(() => {
+      setHeaderMode("inner", cat.name);
+
+      const html = `
+        <!-- 蓝色顶部标题栏 -->
+        <div class="video-topics-header">
+          <h2 class="video-topics-title">${htmlesc(cat.nameCN || cat.name)}</h2>
+        </div>
+        
+        <!-- 类目网格（按行排列）-->
+        ${videoTopics.length > 0 ? `
+        <div class="video-topics-grid">
+          ${rows.map(row => `
+            <div class="video-topics-row">
+              ${row.map(topic => `
+                <a class="video-topic-card" href="#/video-play/${htmlesc(catId)}/${htmlesc(topic.id)}" aria-label="查看${htmlesc(topic.name)}视频">
+                  <div class="video-topic-image">
+                    ${topic.image ? `<img src="${htmlesc(topic.image)}" alt="${htmlesc(topic.name)}" />` : ''}
+                  </div>
+                  <div class="video-topic-name">${htmlesc(topic.name)}</div>
+                </a>
+              `).join('')}
+            </div>
+          `).join('')}
+        </div>
+        ` : '<div class="empty-state" style="padding: 60px 20px;">该分类暂无视频类目</div>'}
+      `;
+      app.innerHTML = html;
+      scrollToTop(false);
+
+      // 添加点击反馈
+      document.querySelectorAll(".video-topic-card").forEach((item) => {
+        item.addEventListener("click", () => hapticFeedback("medium"));
+      });
+      
+      // 更新底部导航状态
+      updateBottomNav();
+    });
+  }
+
+  // 视频播放页 - 显示该类目下的所有视频
+  function renderVideoPlay(catId, topicId) {
+    const cat = findCategory(catId);
+    if (!cat) {
+      renderNotFound("未找到该产品类型");
+      return;
+    }
+
+    const topic = cat.videoTopics?.find(t => t.id === topicId);
+    if (!topic) {
+      renderNotFound("未找到该视频类目");
+      return;
+    }
+
+    simulateLoading(() => {
+      setHeaderMode("inner", topic.name);
+
+      const html = `
+        <section class="video-play-page">
+          <!-- 类目名称标题 -->
+          <h2 class="video-play-title">${htmlesc(topic.name)}</h2>
+          
+          <!-- 视频列表 -->
+          ${topic.videos && topic.videos.length > 0 ? `
+            <div class="video-play-list">
+              ${topic.videos.map((video, index) => `
+                <div class="video-play-item ${video.orientation === 'vertical' ? 'vertical' : 'horizontal'}">
+                  <div class="video-play-wrapper loading" id="video-play-${index}">
                     <video
                       src="${htmlesc(video.file)}"
                       controls
@@ -517,12 +625,15 @@
                       webkit-playsinline
                       preload="metadata"
                       poster="${htmlesc(video.thumbnail || '')}"
+                      class="video-play-player"
                     ></video>
+                    <div class="video-play-overlay">
+                      <div class="video-play-btn">▶</div>
+                    </div>
                   </div>
-                  <div class="video-info">
-                    <div class="video-title">${htmlesc(video.title)}</div>
-                    ${video.desc ? `<div class="video-desc">${htmlesc(video.desc)}</div>` : ''}
-                    ${video.duration ? `<div class="video-duration">⏱ ${htmlesc(video.duration)}</div>` : ''}
+                  <div class="video-play-info">
+                    <div class="video-play-video-title">${htmlesc(video.title)}</div>
+                    ${video.duration ? `<div class="video-play-duration">⏱ ${htmlesc(video.duration)}</div>` : ''}
                   </div>
                 </div>
               `).join('')}
@@ -534,19 +645,43 @@
       scrollToTop(false);
       updateBottomNav();
 
-      // 视频加载状态管理
-      if (product.videos) {
-        product.videos.forEach((video, index) => {
-          const videoContainer = document.getElementById(`video-${index}`);
-          if (videoContainer) {
-            const videoEl = videoContainer.querySelector("video");
-            if (videoEl) {
+      // 视频加载和播放控制
+      if (topic.videos) {
+        topic.videos.forEach((video, index) => {
+          const wrapper = document.getElementById(`video-play-${index}`);
+          if (wrapper) {
+            const videoEl = wrapper.querySelector("video");
+            const overlay = wrapper.querySelector(".video-play-overlay");
+            
+            if (videoEl && overlay) {
+              // 视频加载完成
               videoEl.addEventListener("loadeddata", () => {
-                videoContainer.classList.remove("loading");
+                wrapper.classList.remove("loading");
               });
+              
+              // 视频加载失败
               videoEl.addEventListener("error", () => {
-                videoContainer.classList.remove("loading");
-                videoContainer.classList.add("error");
+                wrapper.classList.remove("loading");
+                wrapper.classList.add("error");
+              });
+              
+              // 点击播放按钮
+              overlay.addEventListener("click", () => {
+                videoEl.play();
+                overlay.style.display = "none";
+                hapticFeedback("medium");
+              });
+              
+              // 视频开始播放
+              videoEl.addEventListener("play", () => {
+                overlay.style.display = "none";
+              });
+              
+              // 视频暂停
+              videoEl.addEventListener("pause", () => {
+                if (videoEl.currentTime > 0 && videoEl.currentTime < videoEl.duration) {
+                  overlay.style.display = "flex";
+                }
               });
             }
           }
@@ -578,17 +713,41 @@
     const h = (window.location.hash || "#/").replace(/^#/, "");
     const parts = h.split("/").filter(Boolean);
 
-    if (parts.length === 0) return { name: "home" };
+    if (parts.length === 0) return { name: "home", mode: "pdf" };
     
-    // #/category/{categoryId}
+    // #/video - 视频首页
+    if (parts[0] === "video" && parts.length === 1) {
+      return { name: "home", mode: "video" };
+    }
+    
+    // #/pdf - PDF首页（默认）
+    if (parts[0] === "pdf" && parts.length === 1) {
+      return { name: "home", mode: "pdf" };
+    }
+    
+    // #/video-topics/{categoryId} - 视频类目列表页
+    if (parts[0] === "video-topics" && parts[1]) {
+      return { name: "video-topics", categoryId: parts[1] };
+    }
+    
+    // #/video-play/{categoryId}/{topicId} - 视频播放页
+    if (parts[0] === "video-play" && parts[1] && parts[2]) {
+      return { name: "video-play", categoryId: parts[1], topicId: parts[2] };
+    }
+    
+    // #/pdf-category/{categoryId} - PDF产品列表页
+    if (parts[0] === "pdf-category" && parts[1]) {
+      return { name: "pdf-category", categoryId: parts[1] };
+    }
+    
+    // #/pdf-download/{categoryId}/{productId} - PDF下载页
+    if (parts[0] === "pdf-download" && parts[1] && parts[2]) {
+      return { name: "pdf-download", categoryId: parts[1], productId: parts[2] };
+    }
+    
+    // 兼容旧路由 #/category/{categoryId}
     if (parts[0] === "category" && parts[1]) {
-      if (parts[2]) {
-        // #/category/{categoryId}/{productId}
-        return { name: "product", categoryId: parts[1], productId: parts[2] };
-      } else {
-        // #/category/{categoryId}
-        return { name: "category", categoryId: parts[1] };
-      }
+      return { name: "pdf-category", categoryId: parts[1] };
     }
     
     return { name: "notfound" };
@@ -605,14 +764,20 @@
     }
 
     if (route.name === "home") {
-      renderHome();
+      renderHome(route.mode || "pdf");
     } 
-    else if (route.name === "category") {
+    else if (route.name === "pdf-category") {
       renderCategory(route.categoryId);
-    } 
-    else if (route.name === "product") {
-      renderProduct(route.productId);
-    } 
+    }
+    else if (route.name === "pdf-download") {
+      renderPdfDownload(route.categoryId, route.productId);
+    }
+    else if (route.name === "video-topics") {
+      renderVideoTopics(route.categoryId);
+    }
+    else if (route.name === "video-play") {
+      renderVideoPlay(route.categoryId, route.topicId);
+    }
     else {
       renderNotFound("路由无效");
     }
