@@ -63,23 +63,15 @@
       <!-- 内容由 JS 渲染 -->
     </main>
 
-    <!-- 固定底部导航栏 -->
+    <!-- 固定底部导航栏 - 动态面包屑 -->
     <nav class="bottom-nav" id="bottomNav" aria-label="底部导航">
-      <a href="#/" class="bottom-nav-item" id="navHome" aria-label="首页">
-        <div class="nav-icon">🏠</div>
-        <div class="nav-label">首页</div>
-      </a>
-      <button class="bottom-nav-item" id="navBack" aria-label="返回上一页" type="button" style="display:none;">
-        <div class="nav-icon">←</div>
-        <div class="nav-label">返回</div>
-      </button>
+      <!-- 动态生成面包屑按钮 -->
     </nav>
 
     <!-- 底部安全留白（适配刘海屏/底部手势条） -->
     <div class="safe-bottom" style="display:none;"></div>
 
     <!-- 脚本加载 -->
-    <script src="js/data.js"></script>
     <script src="js/app.js"></script>
     
     <!-- 错误边界 -->

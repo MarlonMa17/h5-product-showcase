@@ -13,11 +13,34 @@
   const btnPrev = document.getElementById("btnPrev");
   const btnNext = document.getElementById("btnNext");
 
-  const DATA = window.APP_DATA;
+  let DATA = null; // 数据将异步加载
 
   // ========== 状态管理 ==========
   let currentRoute = { name: "home" };
   let history = [];
+
+  // ========== 数据加载 ==========
+  async function loadData() {
+    try {
+      const response = await fetch('js/data.json');
+      if (!response.ok) {
+        throw new Error('数据加载失败');
+      }
+      DATA = await response.json();
+      console.log('✅ 数据加载成功', DATA);
+      return true;
+    } catch (error) {
+      console.error('❌ 数据加载失败:', error);
+      app.innerHTML = `
+        <div style="text-align:center; padding:60px 20px; color:#999;">
+          <div style="font-size:48px; margin-bottom:16px;">⚠️</div>
+          <h2 style="font-size:18px; margin-bottom:8px;">数据加载失败</h2>
+          <p style="font-size:14px;">请检查网络连接或联系管理员</p>
+        </div>
+      `;
+      return false;
+    }
+  }
 
   // ========== 工具函数 ==========
   function htmlesc(str) {
@@ -79,16 +102,11 @@
 
   // 数据查询
   function findCategory(catId) {
-    const productsNav = DATA.mainNav.find(nav => nav.id === "products");
-    if (!productsNav || !productsNav.categories) return null;
-    return productsNav.categories.find((c) => c.id === catId) || null;
+    return DATA.categories.find((c) => c.id === catId) || null;
   }
 
   function findProduct(productId) {
-    const productsNav = DATA.mainNav.find(nav => nav.id === "products");
-    if (!productsNav || !productsNav.categories) return null;
-    
-    for (const c of productsNav.categories) {
+    for (const c of DATA.categories) {
       const p = c.products.find((x) => x.id === productId);
       if (p) return { category: c, product: p };
     }
@@ -120,22 +138,77 @@
   }
 
   // 底部导航栏控制
+  // 动态生成底部面包屑导航
   function updateBottomNav() {
-    const navBack = document.getElementById("navBack");
-    const navHome = document.getElementById("navHome");
+    const bottomNav = document.getElementById("bottomNav");
+    if (!bottomNav) return;
     
-    if (!navBack || !navHome) return;
+    const breadcrumbs = [];
     
-    // 首页：只显示首页按钮（高亮）
-    if (currentRoute.name === "home") {
-      navBack.style.display = "none";
-      navHome.classList.add("active");
-    } 
-    // 其他页面：显示首页+返回按钮
-    else {
-      navBack.style.display = "flex";
-      navHome.classList.remove("active");
+    // 首页按钮（始终存在）
+    breadcrumbs.push({
+      icon: "🏠",
+      label: "首页",
+      href: "#/",
+      active: currentRoute.name === "home"
+    });
+    
+    // 根据当前路由添加面包屑
+    if (currentRoute.name === "category" && currentRoute.categoryId) {
+      const category = findCategory(currentRoute.categoryId);
+      if (category) {
+        breadcrumbs.push({
+          icon: category.icon || "📦",
+          label: category.name,
+          href: `#/category/${category.id}`,
+          active: true  // 当前位置
+        });
+      }
     }
+    
+    if (currentRoute.name === "product" && currentRoute.productId) {
+      const result = findProduct(currentRoute.productId);
+      if (result) {
+        const { category, product } = result;
+        
+        // 添加分类按钮
+        breadcrumbs.push({
+          icon: category.icon || "📦",
+          label: category.name,
+          href: `#/category/${category.id}`,
+          active: false
+        });
+        
+        // 添加产品按钮
+        breadcrumbs.push({
+          icon: "📋",
+          label: product.name.length > 12 ? product.name.substring(0, 12) + "..." : product.name,
+          href: `#/category/${category.id}/${product.id}`,
+          active: true  // 当前位置
+        });
+      }
+    }
+    
+    // 生成HTML
+    const html = breadcrumbs.map(crumb => `
+      ${crumb.active 
+        ? `<div class="breadcrumb-btn active">
+             <div class="nav-icon">${crumb.icon}</div>
+             <div class="nav-label">${htmlesc(crumb.label)}</div>
+           </div>`
+        : `<a class="breadcrumb-btn" href="${crumb.href}" aria-label="前往${htmlesc(crumb.label)}">
+             <div class="nav-icon">${crumb.icon}</div>
+             <div class="nav-label">${htmlesc(crumb.label)}</div>
+           </a>`
+      }
+    `).join('');
+    
+    bottomNav.innerHTML = html;
+    
+    // 添加点击反馈
+    bottomNav.querySelectorAll('.breadcrumb-btn:not(.active)').forEach(btn => {
+      btn.addEventListener('click', () => hapticFeedback('medium'));
+    });
   }
 
   // ========== 轮播功能优化 ==========
@@ -286,22 +359,22 @@
 
   // ========== 页面渲染 ==========
 
-  // 首页
+  // 首页 - 6个产品分类
   function renderHome() {
     simulateLoading(() => {
       setHeaderMode("home");
       const html = `
-        <section class="grid" aria-label="网站导航">
+        <section class="grid" aria-label="产品分类">
           <div class="grid-items">
-            ${DATA.mainNav
+            ${DATA.categories
               .map(
-                (nav) => `
-                <a class="grid-item" href="#/nav/${htmlesc(nav.id)}" aria-label="进入${htmlesc(nav.title)}">
+                (cat) => `
+                <a class="grid-item" href="#/category/${htmlesc(cat.id)}" aria-label="进入${htmlesc(cat.name)}">
                   <div class="iconbox" aria-hidden="true">
-                    <div style="font-size:22px">${htmlesc(nav.icon || "📦")}</div>
+                    <div style="font-size:22px">${htmlesc(cat.icon || "📦")}</div>
                   </div>
-                  <div class="grid-title">${htmlesc(nav.title)}</div>
-                  <div class="grid-sub">${htmlesc(nav.subtitle || "")}</div>
+                  <div class="grid-title">${htmlesc(cat.name)}</div>
+                  <div class="grid-sub">${htmlesc(cat.desc || "")}</div>
                 </a>
               `
               )
@@ -323,109 +396,9 @@
   }
 
   // 内容页（如公司介绍）
-  function renderContentPage(nav) {
-    simulateLoading(() => {
-      setHeaderMode("inner", nav.title);
-      
-      if (!nav.content || !nav.content.sections) {
-        renderNotFound("内容加载失败");
-        return;
-      }
-      
-      const html = `
-        <section class="card" style="margin-top: 16px;">
-          <h1 class="h1">${htmlesc(nav.content.title || nav.title)}</h1>
-          ${nav.content.sections
-            .map(
-              (section) => `
-              <h2 style="font-size: 18px; font-weight: 700; margin: 20px 0 12px 0; color: var(--primary);">
-                ${htmlesc(section.heading)}
-              </h2>
-              <p class="p" style="white-space: pre-line;">${htmlesc(section.text)}</p>
-            `
-            )
-            .join("")}
-        </section>
-      `;
-      app.innerHTML = html;
-      scrollToTop();
-      updateBottomNav();
-    });
-  }
-
-  // 产品分类列表页
-  function renderProductCategories() {
-    const productsNav = DATA.mainNav.find(nav => nav.id === "products");
-    if (!productsNav || !productsNav.categories) {
-      renderNotFound("产品分类加载失败");
-      return;
-    }
-
-    simulateLoading(() => {
-      setHeaderMode("inner", productsNav.title);
-
-      const html = `
-        <section class="list" aria-label="产品分类列表">
-          ${productsNav.categories
-            .map(
-              (cat) => `
-              <a class="list-item" href="#/nav/products/${htmlesc(cat.id)}" aria-label="查看${htmlesc(cat.name)}">
-                <div class="thumb">${htmlesc(cat.icon || "📦")}</div>
-                <div class="li-text">
-                  <div class="li-title">${htmlesc(cat.name)}</div>
-                  <div class="li-desc">${htmlesc(cat.desc || "")}</div>
-                </div>
-                <div class="arrow">›</div>
-              </a>
-            `
-            )
-            .join("")}
-        </section>
-      `;
-      app.innerHTML = html;
-      scrollToTop();
-      updateBottomNav();
-
-      // 添加点击反馈
-      document.querySelectorAll(".list-item").forEach((item) => {
-        item.addEventListener("click", () => hapticFeedback("light"));
-      });
-    });
-  }
-
-  // 敬请期待页
-  function renderComingSoon(nav) {
-    simulateLoading(() => {
-      setHeaderMode("inner", nav.title);
-      
-      const html = `
-        <section class="card" style="margin-top: 16px; text-align: center; padding: 60px 20px;">
-          <div style="font-size: 64px; margin-bottom: 20px;">🚧</div>
-          <h1 class="h1" style="margin-bottom: 12px;">敬请期待</h1>
-          <p class="p" style="color: var(--muted); margin-bottom: 30px;">
-            该功能正在开发中<br>感谢您的关注与支持
-          </p>
-          <a href="#/" class="btn primary" onclick="window.hapticFeedback?.('medium')" style="display: inline-block; text-decoration: none; max-width: 200px;">
-            返回首页
-          </a>
-        </section>
-      `;
-      app.innerHTML = html;
-      scrollToTop();
-      updateBottomNav();
-    });
-  }
-
-  // 分类页（改名为产品列表页）
+  // 产品列表页
   function renderCategory(catId) {
-    // 从产品中心找分类
-    const productsNav = DATA.mainNav.find(nav => nav.id === "products");
-    if (!productsNav || !productsNav.categories) {
-      renderNotFound("产品分类加载失败");
-      return;
-    }
-    
-    const cat = productsNav.categories.find(c => c.id === catId);
+    const cat = findCategory(catId);
     if (!cat) {
       renderNotFound("未找到该产品类型");
       return;
@@ -448,7 +421,7 @@
           ${cat.products
             .map(
               (p) => `
-              <a class="product-card" href="#/nav/products/${htmlesc(catId)}/${htmlesc(p.id)}" aria-label="查看${htmlesc(p.name)}详情">
+              <a class="product-card" href="#/category/${htmlesc(catId)}/${htmlesc(p.id)}" aria-label="查看${htmlesc(p.name)}详情">
                 <div class="product-card-image">
                   ${p.image ? `<img src="${htmlesc(p.image)}" alt="${htmlesc(p.name)}" />` : `<div style="display:grid; place-items:center; height:100%; color:var(--muted);">📦</div>`}
                 </div>
@@ -475,6 +448,7 @@
   }
 
   // 详情页
+  // 产品详情页 - 标签切换设计
   function renderProduct(productId) {
     const result = findProduct(productId);
     if (!result) {
@@ -489,24 +463,68 @@
 
       const html = `
         <section class="card">
-          <div class="h1">${htmlesc(product.name)}</div>
+          <h1 class="h1">${htmlesc(product.name)}</h1>
           <p class="p">${htmlesc(product.desc || "")}</p>
 
-          <div class="video loading" id="productVideo" aria-label="产品视频">
-            <video
-              src="${htmlesc(product.video)}"
-              controls
-              playsinline
-              webkit-playsinline
-              preload="metadata"
-              poster=""
-            ></video>
+          <!-- 标签页导航 -->
+          <div class="tabs-nav">
+            <button class="tab-btn active" data-tab="videos">
+              <span class="tab-icon">🎬</span>
+              <span class="tab-text">产品视频</span>
+            </button>
+            <button class="tab-btn" data-tab="pdfs">
+              <span class="tab-icon">📄</span>
+              <span class="tab-text">产品文档</span>
+            </button>
           </div>
 
-          <div class="btnrow" style="justify-content: center;">
-            <a class="btn primary" href="${htmlesc(product.pdf)}" download aria-label="下载产品PDF" style="min-width: 200px;">
-              📥 下载产品资料
-            </a>
+          <!-- 标签页内容 -->
+          <div class="tabs-content">
+            <!-- 视频标签页 -->
+            <div class="tab-pane active" id="paneVideos">
+              ${product.videos && product.videos.length > 0 ? `
+                <div class="video-list">
+                  ${product.videos.map((video, index) => `
+                    <div class="video-item" data-index="${index}">
+                      <div class="video loading" id="video-${index}">
+                        <video
+                          src="${htmlesc(video.file)}"
+                          controls
+                          playsinline
+                          webkit-playsinline
+                          preload="metadata"
+                          poster="${htmlesc(video.thumbnail || '')}"
+                        ></video>
+                      </div>
+                      <div class="video-info">
+                        <div class="video-title">${htmlesc(video.title)}</div>
+                        ${video.desc ? `<div class="video-desc">${htmlesc(video.desc)}</div>` : ''}
+                        ${video.duration ? `<div class="video-duration">⏱ ${htmlesc(video.duration)}</div>` : ''}
+                      </div>
+                    </div>
+                  `).join('')}
+                </div>
+              ` : '<div class="empty-state">暂无视频内容</div>'}
+            </div>
+
+            <!-- 文档标签页 -->
+            <div class="tab-pane" id="panePdfs">
+              ${product.pdfs && product.pdfs.length > 0 ? `
+                <div class="pdf-list">
+                  ${product.pdfs.map(pdf => `
+                    <a class="pdf-item" href="${htmlesc(pdf.file)}" download aria-label="下载${htmlesc(pdf.title)}">
+                      <div class="pdf-icon">📥</div>
+                      <div class="pdf-info">
+                        <div class="pdf-title">${htmlesc(pdf.title)}</div>
+                        ${pdf.desc ? `<div class="pdf-desc">${htmlesc(pdf.desc)}</div>` : ''}
+                        ${pdf.size ? `<div class="pdf-size">${htmlesc(pdf.size)}</div>` : ''}
+                      </div>
+                      <div class="pdf-arrow">→</div>
+                    </a>
+                  `).join('')}
+                </div>
+              ` : '<div class="empty-state">暂无文档资料</div>'}
+            </div>
           </div>
         </section>
       `;
@@ -514,23 +532,50 @@
       scrollToTop(false);
       updateBottomNav();
 
+      // 标签切换功能
+      const tabBtns = document.querySelectorAll('.tab-btn');
+      const tabPanes = document.querySelectorAll('.tab-pane');
+      
+      tabBtns.forEach(btn => {
+        btn.addEventListener('click', () => {
+          const tabName = btn.getAttribute('data-tab');
+          
+          // 更新按钮状态
+          tabBtns.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          
+          // 更新内容显示
+          tabPanes.forEach(pane => {
+            if (pane.id === `pane${tabName.charAt(0).toUpperCase() + tabName.slice(1)}`) {
+              pane.classList.add('active');
+            } else {
+              pane.classList.remove('active');
+            }
+          });
+          
+          // 触感反馈
+          hapticFeedback('light');
+        });
+      });
+
       // 视频加载状态管理
-      const videoContainer = document.getElementById("productVideo");
-      const video = videoContainer.querySelector("video");
-
-      video.addEventListener("loadeddata", () => {
-        videoContainer.classList.remove("loading");
-      });
-
-      video.addEventListener("error", () => {
-        videoContainer.classList.remove("loading");
-        video.poster = "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='100' height='100'%3E%3Ctext x='50%25' y='50%25' dominant-baseline='middle' text-anchor='middle' font-size='14' fill='%23999'%3E视频加载失败%3C/text%3E%3C/svg%3E";
-      });
-
-      // 按钮反馈
-      document.querySelectorAll(".btn").forEach((btn) => {
-        btn.addEventListener("click", () => hapticFeedback("medium"));
-      });
+      if (product.videos) {
+        product.videos.forEach((video, index) => {
+          const videoContainer = document.getElementById(`video-${index}`);
+          if (videoContainer) {
+            const videoEl = videoContainer.querySelector("video");
+            if (videoEl) {
+              videoEl.addEventListener("loadeddata", () => {
+                videoContainer.classList.remove("loading");
+              });
+              videoEl.addEventListener("error", () => {
+                videoContainer.classList.remove("loading");
+                videoContainer.classList.add("error");
+              });
+            }
+          }
+        });
+      }
     });
   }
 
@@ -559,28 +604,15 @@
 
     if (parts.length === 0) return { name: "home" };
     
-    // 新路由格式: #/nav/{navId}[/{categoryId}][/{productId}]
-    if (parts[0] === "nav" && parts[1]) {
-      const navId = parts[1];
-      if (parts[2]) {
-        // #/nav/products/sealant 或 #/nav/products/sealant/101
-        if (parts[3]) {
-          return { name: "product", navId, categoryId: parts[2], productId: parts[3] };
-        } else {
-          return { name: "product-list", navId, categoryId: parts[2] };
-        }
-      } else {
-        // #/nav/company 或 #/nav/products
-        return { name: "nav", navId };
-      }
-    }
-    
-    // 兼容旧路由
+    // #/category/{categoryId}
     if (parts[0] === "category" && parts[1]) {
-      return { name: "product-list", navId: "products", categoryId: parts[1] };
-    }
-    if (parts[0] === "product" && parts[1]) {
-      return { name: "product", productId: parts[1] };
+      if (parts[2]) {
+        // #/category/{categoryId}/{productId}
+        return { name: "product", categoryId: parts[1], productId: parts[2] };
+      } else {
+        // #/category/{categoryId}
+        return { name: "category", categoryId: parts[1] };
+      }
     }
     
     return { name: "notfound" };
@@ -599,32 +631,11 @@
     if (route.name === "home") {
       renderHome();
     } 
-    else if (route.name === "nav") {
-      // 处理主导航点击
-      const nav = DATA.mainNav.find(n => n.id === route.navId);
-      if (!nav) {
-        renderNotFound("页面不存在");
-        return;
-      }
-      
-      if (nav.type === "page") {
-        renderContentPage(nav);
-      }
-      else if (nav.type === "products") {
-        renderProductCategories();
-      }
-      else if (nav.type === "coming-soon") {
-        renderComingSoon(nav);
-      }
-      else {
-        renderNotFound("页面类型未知");
-      }
-    }
-    else if (route.name === "product-list") {
+    else if (route.name === "category") {
       renderCategory(route.categoryId);
     } 
     else if (route.name === "product") {
-      renderProduct(route.productId || route.parts?.[3]);
+      renderProduct(route.productId);
     } 
     else {
       renderNotFound("路由无效");
@@ -686,7 +697,19 @@
   });
 
   // ========== 初始化 ==========
-  function init() {
+  async function init() {
+    // 显示加载中
+    showLoading();
+    
+    // 加载数据
+    const loaded = await loadData();
+    if (!loaded) {
+      hideLoading();
+      return; // 数据加载失败，不继续初始化
+    }
+    
+    hideLoading();
+    
     // 确保有默认路由
     if (!window.location.hash || window.location.hash === "#") {
       window.location.replace("#/");
@@ -700,15 +723,6 @@
 
     // 首次渲染
     router();
-
-    // 底部导航返回按钮
-    const navBack = document.getElementById("navBack");
-    if (navBack) {
-      navBack.addEventListener("click", () => {
-        window.history.back();
-        hapticFeedback("medium");
-      });
-    }
 
     // 页面可见性变化时暂停/恢复轮播
     document.addEventListener("visibilitychange", () => {
