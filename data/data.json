@@ -1,0 +1,214 @@
+{
+  "carousels": {
+    "home": [
+      {
+        "image": "assets/images/pdf/carousel/1.jpg",
+        "alt": "轮播图1"
+      },
+      {
+        "image": "assets/images/pdf/carousel/2.jpg",
+        "alt": "轮播图2"
+      },
+      {
+        "image": "assets/images/pdf/carousel/3.jpg",
+        "alt": "轮播图3"
+      }
+    ],
+    "pdf": [
+      {
+        "image": "../assets/images/pdf/carousel/1.jpg",
+        "alt": "轮播图1"
+      },
+      {
+        "image": "../assets/images/pdf/carousel/2.jpg",
+        "alt": "轮播图2"
+      },
+      {
+        "image": "../assets/images/pdf/carousel/3.jpg",
+        "alt": "轮播图3"
+      }
+    ],
+    "video": [
+      {
+        "image": "../assets/images/video/carousel/1.jpg",
+        "alt": "轮播图1"
+      },
+      {
+        "image": "../assets/images/video/carousel/2.jpg",
+        "alt": "轮播图2"
+      },
+      {
+        "image": "../assets/images/video/carousel/3.jpg",
+        "alt": "轮播图3"
+      }
+    ]
+  },
+  "pdfCategories": [
+    {
+      "name": "界面剂",
+      "logo": "../assets/images/logos/UZIN.png",
+      "headerImage": "../assets/images/pdf/products/头图.png",
+      "products": []
+    },
+    {
+      "name": "自流平",
+      "logo": "../assets/images/logos/UZIN.png",
+      "headerImage": "../assets/images/pdf/products/头图.png",
+      "products": [
+        {
+          "code": "UZIN NC 145",
+          "name": "标准型自流平水泥",
+          "image": "../assets/images/pdf/products/1.png",
+          "pdfs": [
+            {
+              "name": "产品说明书",
+              "path": "../assets/pdf/UZIN NC 145.pdf"
+            }
+          ]
+        },
+        {
+          "code": "UZIN NC 149",
+          "name": "商用型自流平水泥",
+          "image": "../assets/images/pdf/products/2.png",
+          "pdfs": [
+            {
+              "name": "产品说明书",
+              "path": "../assets/pdf/UZIN NC 149.pdf"
+            }
+          ]
+        },
+        {
+          "code": "UZIN NC 159",
+          "name": "多功能型自流平水泥",
+          "image": "../assets/images/pdf/products/3.png",
+          "pdfs": [
+            {
+              "name": "产品说明书",
+              "path": "../assets/pdf/UZIN NC 159.pdf"
+            }
+          ]
+        },
+        {
+          "code": "UZIN NC 169",
+          "name": "全能型自流平水泥",
+          "image": "../assets/images/pdf/products/4.png",
+          "pdfs": [
+            {
+              "name": "产品说明书",
+              "path": "../assets/pdf/UZIN NC 169.pdf"
+            }
+          ]
+        },
+        {
+          "code": "UZIN NC 182",
+          "name": "低坍落度水泥修补砂浆",
+          "image": "../assets/images/pdf/products/5.png",
+          "pdfs": [
+            {
+              "name": "产品说明书",
+              "path": "../assets/pdf/UZIN NC 182.pdf"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "胶粘剂",
+      "logo": "../assets/images/logos/UZIN.png",
+      "headerImage": "../assets/images/pdf/products/头图.png",
+      "products": []
+    },
+    {
+      "name": "木地板相关",
+      "logo": "../assets/images/logos/PALLMANN.png",
+      "headerImage": "../assets/images/pdf/products/头图.png",
+      "products": []
+    },
+    {
+      "name": "WOLFF",
+      "logo": "../assets/images/logos/WOLFF.png",
+      "headerImage": "../assets/images/pdf/products/头图.png",
+      "products": []
+    },
+    {
+      "name": "Pajarito",
+      "logo": "../assets/images/logos/Pajarito.png",
+      "headerImage": "../assets/images/pdf/products/头图.png",
+      "products": []
+    }
+  ],
+  "videoCategories": [
+    {
+      "name": "弹性地板",
+      "logo": "../assets/images/logos/UZIN.png",
+      "subcategories": [
+        {
+          "name": "界面剂",
+          "image": "../assets/images/video/categories/1界面剂.jpg",
+          "videos": [
+            {
+              "title": "湿度测试V1D4+CM",
+              "path": "../assets/videos/01 湿度测试V1D4+CM.mp4",
+              "orientation": "vertical"
+            },
+            {
+              "title": "UZIN PE 360 PLUS",
+              "path": "../assets/videos/02 UZIN PE 360 PLUS.mp4",
+              "orientation": "horizontal"
+            },
+            {
+              "title": "UZIN PE 460",
+              "path": "../assets/videos/03 UZIN PE 460.mp4",
+              "orientation": "horizontal"
+            },
+            {
+              "title": "UZIN PE 280",
+              "path": "../assets/videos/04 UZIN PE 280.mp4",
+              "orientation": "horizontal"
+            },
+            {
+              "title": "PE480+PE280",
+              "path": "../assets/videos/05 PE480+PE280.mov",
+              "orientation": "horizontal"
+            },
+            {
+              "title": "PE360+RR203+NC182",
+              "path": "../assets/videos/06 PE360+RR203+NC182.mov",
+              "orientation": "horizontal"
+            },
+            {
+              "title": "KR516",
+              "path": "../assets/videos/08 KR516.mp4",
+              "orientation": "horizontal"
+            }
+          ]
+        },
+        {
+          "name": "自流平",
+          "image": "../assets/images/video/categories/2自流平.png",
+          "videos": []
+        },
+        {
+          "name": "胶粘剂",
+          "image": "../assets/images/video/categories/3胶粘剂.png",
+          "videos": []
+        },
+        {
+          "name": "系统",
+          "image": "../assets/images/video/categories/4系统.jpg",
+          "videos": []
+        }
+      ]
+    },
+    {
+      "name": "木地板",
+      "logo": "../assets/images/logos/PALLMANN.png",
+      "subcategories": []
+    },
+    {
+      "name": "工具",
+      "logo": "../assets/images/logos/WOLFF.png",
+      "subcategories": []
+    }
+  ]
+}

@@ -14,23 +14,8 @@
         </div>
 
         <!-- 视频分类列表 -->
-        <div class="video-category-grid">
-            <a href="video-detail.html?category=界面剂" class="video-category-item">
-                <img src="../assets/images/video/categories/1界面剂.jpg" alt="界面剂">
-                <h3>界面剂</h3>
-            </a>
-            <a href="video-detail.html?category=自流平" class="video-category-item">
-                <img src="../assets/images/video/categories/2自流平.png" alt="自流平">
-                <h3>自流平</h3>
-            </a>
-            <a href="video-detail.html?category=胶粘剂" class="video-category-item">
-                <img src="../assets/images/video/categories/3胶粘剂.png" alt="胶粘剂">
-                <h3>胶粘剂</h3>
-            </a>
-            <a href="video-detail.html?category=系统" class="video-category-item">
-                <img src="../assets/images/video/categories/4系统.jpg" alt="系统">
-                <h3>系统</h3>
-            </a>
+        <div class="video-category-grid" id="video-category-grid">
+            <!-- 子分类将通过JavaScript动态生成 -->
         </div>
     </div>
 
@@ -38,13 +23,55 @@
         // 根据URL参数动态设置标题
         const urlParams = new URLSearchParams(window.location.search);
         const category = urlParams.get('category');
-        if (category) {
-            const titleElement = document.querySelector('.video-category-title h2');
-            if (titleElement) {
-                titleElement.textContent = category;
+
+        // 加载JSON数据并生成页面内容
+        async function loadData() {
+            try {
+                const response = await fetch('../data/data.json');
+                const data = await response.json();
+
+                // 找到对应的分类
+                const categoryData = data.videoCategories.find(cat => cat.name === category);
+
+                if (!categoryData) {
+                    console.error('找不到分类:', category);
+                    return;
+                }
+
+                // 更新页面标题
+                const titleElement = document.querySelector('.video-category-title h2');
+                if (titleElement) {
+                    titleElement.textContent = category;
+                }
+                document.title = category + ' - UZIN优成';
+
+                // 生成子分类列表
+                const gridContainer = document.getElementById('video-category-grid');
+                const subcategories = categoryData.subcategories || [];
+
+                if (subcategories.length === 0) {
+                    gridContainer.innerHTML = '<p style="text-align: center; padding: 40px; color: #999;">暂无子分类</p>';
+                    return;
+                }
+
+                subcategories.forEach(subcategory => {
+                    const categoryItem = document.createElement('a');
+                    categoryItem.href = `video-detail.html?parentCategory=${encodeURIComponent(category)}&category=${encodeURIComponent(subcategory.name)}`;
+                    categoryItem.className = 'video-category-item';
+                    categoryItem.innerHTML = `
+                        <img src="${subcategory.image}" alt="${subcategory.name}">
+                        <h3>${subcategory.name}</h3>
+                    `;
+                    gridContainer.appendChild(categoryItem);
+                });
+
+            } catch (error) {
+                console.error('加载数据失败:', error);
             }
-            document.title = category + ' - UZIN优成';
         }
+
+        // 页面加载时执行
+        loadData();
     </script>
 </body>
 </html>

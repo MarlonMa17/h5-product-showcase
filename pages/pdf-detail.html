@@ -16,74 +16,57 @@
         const urlParams = new URLSearchParams(window.location.search);
         const category = urlParams.get('category');
 
-        // 产品数据（按类别组织，每个产品可以有多个PDF文件）
-        const productsByCategory = {
-            '自流平': [
-                {
-                    code: 'UZIN NC 145',
-                    name: '标准型自流平水泥',
-                    pdfs: [
-                        { name: '产品说明书', path: '../assets/pdf/UZIN NC 145.pdf' }
-                    ]
-                },
-                {
-                    code: 'UZIN NC 149',
-                    name: '商用型自流平水泥',
-                    pdfs: [
-                        { name: '产品说明书', path: '../assets/pdf/UZIN NC 149.pdf' }
-                    ]
-                },
-                {
-                    code: 'UZIN NC 159',
-                    name: '多功能型自流平水泥',
-                    pdfs: [
-                        { name: '产品说明书', path: '../assets/pdf/UZIN NC 159.pdf' }
-                    ]
+        // 加载JSON数据并生成页面内容
+        async function loadData() {
+            try {
+                const response = await fetch('../data/data.json');
+                const data = await response.json();
+
+                // 找到对应的分类
+                const categoryData = data.pdfCategories.find(cat => cat.name === category);
+
+                if (!categoryData) {
+                    console.error('找不到分类:', category);
+                    return;
                 }
-            ],
-            '界面剂': [],
-            '胶粘剂': [],
-            '木地板相关': [],
-            'WOLFF': [],
-            'Pajarito': []
-        };
 
-        // 更新页面标题
-        if (category) {
-            document.title = category + ' - UZIN优成';
-        }
+                // 更新页面标题
+                document.title = category + ' - UZIN优成';
 
-        // 生成PDF详情块
-        function generatePDFDetails() {
-            const container = document.getElementById('pdf-container');
-            const products = productsByCategory[category] || [];
+                // 生成PDF详情块
+                const container = document.getElementById('pdf-container');
+                const products = categoryData.products || [];
 
-            if (products.length === 0) {
-                container.innerHTML = '<div class="pdf-detail"><p style="color: #999;">暂无产品资料</p></div>';
-                return;
-            }
+                if (products.length === 0) {
+                    container.innerHTML = '<div class="pdf-detail"><p style="color: #999;">暂无产品资料</p></div>';
+                    return;
+                }
 
-            products.forEach(product => {
-                product.pdfs.forEach(pdf => {
-                    const pdfDetail = document.createElement('div');
-                    pdfDetail.className = 'pdf-detail';
-                    pdfDetail.innerHTML = `
-                        <div class="pdf-icon">
-                            <svg viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
-                                <rect x="10" y="0" width="90" height="130" fill="#e74c3c" rx="5"/>
-                                <path d="M 100 0 L 100 30 L 110 30 Z" fill="#c0392b"/>
-                                <text x="60" y="70" font-size="32" fill="white" text-anchor="middle" font-weight="bold">PDF</text>
-                            </svg>
-                        </div>
-                        <div class="product-info">
-                            <h2>${product.code}</h2>
-                            <p>${product.name}</p>
-                        </div>
-                        <button class="download-btn" onclick="downloadPDF('${pdf.path}')">点击下载产品说明书</button>
-                    `;
-                    container.appendChild(pdfDetail);
+                products.forEach(product => {
+                    product.pdfs.forEach(pdf => {
+                        const pdfDetail = document.createElement('div');
+                        pdfDetail.className = 'pdf-detail';
+                        pdfDetail.innerHTML = `
+                            <div class="pdf-icon">
+                                <svg viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
+                                    <rect x="10" y="0" width="90" height="130" fill="#e74c3c" rx="5"/>
+                                    <path d="M 100 0 L 100 30 L 110 30 Z" fill="#c0392b"/>
+                                    <text x="60" y="70" font-size="32" fill="white" text-anchor="middle" font-weight="bold">PDF</text>
+                                </svg>
+                            </div>
+                            <div class="product-info">
+                                <h2>${product.code}</h2>
+                                <p>${product.name}</p>
+                            </div>
+                            <button class="download-btn" onclick="downloadPDF('${pdf.path}')">点击下载产品说明书</button>
+                        `;
+                        container.appendChild(pdfDetail);
+                    });
                 });
-            });
+
+            } catch (error) {
+                console.error('加载数据失败:', error);
+            }
         }
 
         // PDF下载功能
@@ -95,8 +78,8 @@
             }
         }
 
-        // 页面加载时生成详情
-        generatePDFDetails();
+        // 页面加载时执行
+        loadData();
     </script>
 </body>
 </html>

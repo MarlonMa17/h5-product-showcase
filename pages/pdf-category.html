@@ -27,56 +27,60 @@
         const urlParams = new URLSearchParams(window.location.search);
         const category = urlParams.get('category');
 
-        // 产品数据（仅用于展示缩略图，点击后跳转到类别的PDF列表）
-        const productsByCategory = {
-            '自流平': [
-                { img: '../assets/images/pdf/products/1.png', code: 'UZIN NC 145', name: '标准型自流平水泥' },
-                { img: '../assets/images/pdf/products/2.png', code: 'UZIN NC 149', name: '商用型自流平水泥' },
-                { img: '../assets/images/pdf/products/3.png', code: 'UZIN NC 159', name: '多功能型自流平水泥' },
-                { img: '../assets/images/pdf/products/4.png', code: 'UZIN NC 169', name: '全能型自流平水泥' },
-                { img: '../assets/images/pdf/products/5.png', code: 'UZIN NC 182', name: '低坍落度水泥修补砂浆' }
-            ],
-            '界面剂': [],
-            '胶粘剂': [],
-            '木地板相关': [],
-            'WOLFF': [],
-            'Pajarito': []
-        };
+        // 加载JSON数据并生成页面内容
+        async function loadData() {
+            try {
+                const response = await fetch('../data/data.json');
+                const data = await response.json();
 
-        // 更新页面标题
-        if (category) {
-            const titleElement = document.querySelector('.category-title h2');
-            if (titleElement) {
-                titleElement.textContent = category;
+                // 找到对应的分类
+                const categoryData = data.pdfCategories.find(cat => cat.name === category);
+
+                if (!categoryData) {
+                    console.error('找不到分类:', category);
+                    return;
+                }
+
+                // 更新页面标题和头图
+                const titleElement = document.querySelector('.category-title h2');
+                const headerImage = document.querySelector('.category-header img');
+
+                if (titleElement) {
+                    titleElement.textContent = category;
+                }
+                if (headerImage && categoryData.headerImage) {
+                    headerImage.src = categoryData.headerImage;
+                }
+                document.title = category + ' - UZIN优成';
+
+                // 生成产品列表
+                const productGrid = document.getElementById('product-grid');
+                const products = categoryData.products || [];
+
+                if (products.length === 0) {
+                    productGrid.innerHTML = '<p style="text-align: center; padding: 40px; color: #999; grid-column: 1 / -1;">暂无产品</p>';
+                    return;
+                }
+
+                products.forEach(product => {
+                    const productLink = document.createElement('a');
+                    productLink.href = `pdf-detail.html?category=${encodeURIComponent(category)}`;
+                    productLink.className = 'product-item';
+                    productLink.innerHTML = `
+                        <img src="${product.image}" alt="${product.code}">
+                        <h3>${product.code}</h3>
+                        <p>${product.name}</p>
+                    `;
+                    productGrid.appendChild(productLink);
+                });
+
+            } catch (error) {
+                console.error('加载数据失败:', error);
             }
-            document.title = category + ' - UZIN优成';
         }
 
-        // 生成产品列表
-        function generateProductGrid() {
-            const productGrid = document.getElementById('product-grid');
-            const products = productsByCategory[category] || [];
-
-            if (products.length === 0) {
-                productGrid.innerHTML = '<p style="text-align: center; padding: 40px; color: #999; grid-column: 1 / -1;">暂无产品</p>';
-                return;
-            }
-
-            products.forEach(product => {
-                const productLink = document.createElement('a');
-                productLink.href = `pdf-detail.html?category=${encodeURIComponent(category)}`;
-                productLink.className = 'product-item';
-                productLink.innerHTML = `
-                    <img src="${product.img}" alt="${product.code}">
-                    <h3>${product.code}</h3>
-                    <p>${product.name}</p>
-                `;
-                productGrid.appendChild(productLink);
-            });
-        }
-
-        // 页面加载时生成产品列表
-        generateProductGrid();
+        // 页面加载时执行
+        loadData();
     </script>
 </body>
 </html>

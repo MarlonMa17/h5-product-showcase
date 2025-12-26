@@ -10,47 +10,67 @@
     <div class="container">
         <!-- 轮播图 -->
         <div class="carousel">
-            <div class="carousel-container">
-                <div class="carousel-slide active">
-                    <img src="../assets/images/video/carousel/1.jpg" alt="轮播图1">
-                </div>
-                <div class="carousel-slide">
-                    <img src="../assets/images/video/carousel/2.jpg" alt="轮播图2">
-                </div>
-                <div class="carousel-slide">
-                    <img src="../assets/images/video/carousel/3.jpg" alt="轮播图3">
-                </div>
+            <div class="carousel-container" id="carousel-container">
+                <!-- 轮播图将通过JavaScript动态生成 -->
             </div>
-            <div class="carousel-dots">
-                <span class="dot active"></span>
-                <span class="dot"></span>
-                <span class="dot"></span>
+            <div class="carousel-dots" id="carousel-dots">
+                <!-- 轮播指示点将通过JavaScript动态生成 -->
             </div>
         </div>
 
         <!-- 三宫格 -->
-        <div class="grid-container grid-3">
-            <a href="video-category.html?category=弹性地板" class="grid-item">
-                <div class="grid-icon-img">
-                    <img src="../assets/images/logos/UZIN.png" alt="UZIN">
-                </div>
-                <span class="grid-label">弹性地板</span>
-            </a>
-            <a href="video-category.html?category=木地板" class="grid-item">
-                <div class="grid-icon-img">
-                    <img src="../assets/images/logos/PALLMANN.png" alt="PALLMANN">
-                </div>
-                <span class="grid-label">木地板</span>
-            </a>
-            <a href="video-category.html?category=工具" class="grid-item">
-                <div class="grid-icon-img">
-                    <img src="../assets/images/logos/WOLFF.png" alt="WOLFF">
-                </div>
-                <span class="grid-label">工具</span>
-            </a>
+        <div class="grid-container grid-3" id="grid-container">
+            <!-- 分类将通过JavaScript动态生成 -->
         </div>
     </div>
 
     <script src="../js/carousel.js"></script>
+    <script>
+        // 加载JSON数据并生成页面内容
+        async function loadData() {
+            try {
+                const response = await fetch('../data/data.json');
+                const data = await response.json();
+
+                // 生成轮播图
+                const carouselContainer = document.getElementById('carousel-container');
+                const carouselDots = document.getElementById('carousel-dots');
+
+                data.carousels.video.forEach((item, index) => {
+                    // 创建轮播图片
+                    const slide = document.createElement('div');
+                    slide.className = 'carousel-slide' + (index === 0 ? ' active' : '');
+                    slide.innerHTML = `<img src="${item.image}" alt="${item.alt}">`;
+                    carouselContainer.appendChild(slide);
+
+                    // 创建指示点
+                    const dot = document.createElement('span');
+                    dot.className = 'dot' + (index === 0 ? ' active' : '');
+                    carouselDots.appendChild(dot);
+                });
+
+                // 生成分类网格
+                const gridContainer = document.getElementById('grid-container');
+                data.videoCategories.forEach(category => {
+                    const gridItem = document.createElement('a');
+                    gridItem.href = `video-category.html?category=${encodeURIComponent(category.name)}`;
+                    gridItem.className = 'grid-item';
+                    gridItem.innerHTML = `
+                        <div class="grid-icon-img">
+                            <img src="${category.logo}" alt="${category.name}">
+                        </div>
+                        <span class="grid-label">${category.name}</span>
+                    `;
+                    gridContainer.appendChild(gridItem);
+                });
+
+            } catch (error) {
+                console.error('加载数据失败:', error);
+            }
+        }
+
+        // 页面加载时执行
+        loadData();
+    </script>
 </body>
 </html>
