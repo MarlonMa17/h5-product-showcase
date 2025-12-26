@@ -4,153 +4,47 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UZIN优成 - 产品展示</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            min-height: 100vh;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .container {
-            background: white;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            padding: 60px 40px;
-            max-width: 500px;
-            width: 100%;
-            text-align: center;
-        }
-
-        h1 {
-            font-size: 32px;
-            color: #333;
-            margin-bottom: 12px;
-            font-weight: 700;
-        }
-
-        .subtitle {
-            color: #666;
-            font-size: 16px;
-            margin-bottom: 50px;
-        }
-
-        .button-group {
-            display: flex;
-            flex-direction: column;
-            gap: 20px;
-        }
-
-        .nav-button {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 15px;
-            padding: 25px 30px;
-            border-radius: 12px;
-            text-decoration: none;
-            font-size: 18px;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border: 2px solid transparent;
-            position: relative;
-            overflow: hidden;
-        }
-
-        .nav-button::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: rgba(255, 255, 255, 0.2);
-            transition: left 0.3s ease;
-        }
-
-        .nav-button:hover::before {
-            left: 100%;
-        }
-
-        .nav-button:active {
-            transform: scale(0.98);
-        }
-
-        .pdf-button {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            color: white;
-        }
-
-        .pdf-button:hover {
-            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
-            transform: translateY(-2px);
-        }
-
-        .video-button {
-            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
-            color: white;
-        }
-
-        .video-button:hover {
-            box-shadow: 0 8px 25px rgba(245, 87, 108, 0.4);
-            transform: translateY(-2px);
-        }
-
-        .icon {
-            font-size: 28px;
-        }
-
-        .footer {
-            margin-top: 40px;
-            color: #999;
-            font-size: 14px;
-        }
-
-        @media (max-width: 600px) {
-            .container {
-                padding: 40px 25px;
-            }
-
-            h1 {
-                font-size: 26px;
-            }
-
-            .nav-button {
-                padding: 20px 25px;
-                font-size: 16px;
-            }
-        }
-    </style>
+    <link rel="stylesheet" href="css/styles.css">
 </head>
 <body>
     <div class="container">
-        <h1>UZIN 优成</h1>
-        <p class="subtitle">选择您要查看的内容</p>
-
-        <div class="button-group">
-            <a href="pages/pdf-home.html" class="nav-button pdf-button">
-                <span class="icon">📄</span>
-                <span>产品资料 PDF</span>
-            </a>
-
-            <a href="pages/video-home.html" class="nav-button video-button">
-                <span class="icon">🎬</span>
-                <span>产品视频介绍</span>
-            </a>
+        <!-- 轮播图 -->
+        <div class="carousel">
+            <div class="carousel-container">
+                <div class="carousel-slide active">
+                    <img src="assets/images/pdf/carousel/1.jpg" alt="轮播图1">
+                </div>
+                <div class="carousel-slide">
+                    <img src="assets/images/pdf/carousel/2.jpg" alt="轮播图2">
+                </div>
+                <div class="carousel-slide">
+                    <img src="assets/images/pdf/carousel/3.jpg" alt="轮播图3">
+                </div>
+            </div>
+            <div class="carousel-dots">
+                <span class="dot active"></span>
+                <span class="dot"></span>
+                <span class="dot"></span>
+            </div>
         </div>
 
-        <div class="footer">
-            UZIN Product Showcase
+        <!-- 二宫格 -->
+        <div class="grid-container grid-2">
+            <a href="pages/pdf-home.html" class="grid-item">
+                <div class="grid-icon-img">
+                    <img src="assets/images/logos/UZIN.png" alt="PDF">
+                </div>
+                <span class="grid-label">产品资料 PDF</span>
+            </a>
+            <a href="pages/video-home.html" class="grid-item">
+                <div class="grid-icon-img">
+                    <img src="assets/images/logos/PALLMANN.png" alt="Video">
+                </div>
+                <span class="grid-label">产品视频介绍</span>
+            </a>
         </div>
     </div>
+
+    <script src="js/carousel.js"></script>
 </body>
 </html>

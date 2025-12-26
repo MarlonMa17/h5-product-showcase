@@ -17,32 +17,8 @@
         </div>
 
         <!-- 产品列表 -->
-        <div class="product-grid">
-            <a href="pdf-detail.html?id=1" class="product-item">
-                <img src="../assets/images/pdf/products/1.png" alt="UZIN NC 145">
-                <h3>UZIN NC 145</h3>
-                <p>标准型自流平水泥</p>
-            </a>
-            <a href="pdf-detail.html?id=2" class="product-item">
-                <img src="../assets/images/pdf/products/2.png" alt="UZIN NC 149">
-                <h3>UZIN NC 149</h3>
-                <p>商用型自流平水泥</p>
-            </a>
-            <a href="pdf-detail.html?id=3" class="product-item">
-                <img src="../assets/images/pdf/products/3.png" alt="UZIN NC 159">
-                <h3>UZIN NC 159</h3>
-                <p>多功能型自流平水泥</p>
-            </a>
-            <a href="pdf-detail.html?id=4" class="product-item">
-                <img src="../assets/images/pdf/products/4.png" alt="UZIN NC 169">
-                <h3>UZIN NC 169</h3>
-                <p>全能型自流平水泥</p>
-            </a>
-            <a href="pdf-detail.html?id=5" class="product-item">
-                <img src="../assets/images/pdf/products/5.png" alt="UZIN NC 182">
-                <h3>UZIN NC 182</h3>
-                <p>低坍落度水泥修补砂浆</p>
-            </a>
+        <div class="product-grid" id="product-grid">
+            <!-- 产品将通过JavaScript动态生成，点击后跳转到该类别的PDF列表页 -->
         </div>
     </div>
 
@@ -50,6 +26,24 @@
         // 根据URL参数动态设置标题
         const urlParams = new URLSearchParams(window.location.search);
         const category = urlParams.get('category');
+
+        // 产品数据（仅用于展示缩略图，点击后跳转到类别的PDF列表）
+        const productsByCategory = {
+            '自流平': [
+                { img: '../assets/images/pdf/products/1.png', code: 'UZIN NC 145', name: '标准型自流平水泥' },
+                { img: '../assets/images/pdf/products/2.png', code: 'UZIN NC 149', name: '商用型自流平水泥' },
+                { img: '../assets/images/pdf/products/3.png', code: 'UZIN NC 159', name: '多功能型自流平水泥' },
+                { img: '../assets/images/pdf/products/4.png', code: 'UZIN NC 169', name: '全能型自流平水泥' },
+                { img: '../assets/images/pdf/products/5.png', code: 'UZIN NC 182', name: '低坍落度水泥修补砂浆' }
+            ],
+            '界面剂': [],
+            '胶粘剂': [],
+            '木地板相关': [],
+            'WOLFF': [],
+            'Pajarito': []
+        };
+
+        // 更新页面标题
         if (category) {
             const titleElement = document.querySelector('.category-title h2');
             if (titleElement) {
@@ -57,6 +51,32 @@
             }
             document.title = category + ' - UZIN优成';
         }
+
+        // 生成产品列表
+        function generateProductGrid() {
+            const productGrid = document.getElementById('product-grid');
+            const products = productsByCategory[category] || [];
+
+            if (products.length === 0) {
+                productGrid.innerHTML = '<p style="text-align: center; padding: 40px; color: #999; grid-column: 1 / -1;">暂无产品</p>';
+                return;
+            }
+
+            products.forEach(product => {
+                const productLink = document.createElement('a');
+                productLink.href = `pdf-detail.html?category=${encodeURIComponent(category)}`;
+                productLink.className = 'product-item';
+                productLink.innerHTML = `
+                    <img src="${product.img}" alt="${product.code}">
+                    <h3>${product.code}</h3>
+                    <p>${product.name}</p>
+                `;
+                productGrid.appendChild(productLink);
+            });
+        }
+
+        // 页面加载时生成产品列表
+        generateProductGrid();
     </script>
 </body>
 </html>

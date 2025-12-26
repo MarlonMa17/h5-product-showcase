@@ -14,6 +14,7 @@ body {
   background: #ffffff;
   color: #333333;
   -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
 }
 
 .container {
@@ -22,6 +23,8 @@ body {
   min-height: 100vh;
   background: #ffffff;
   position: relative;
+  display: flex;
+  flex-direction: column;
 }
 
 /* 状态栏和头部已移除 - 微信会自动显示这些内容 */
@@ -30,7 +33,7 @@ body {
 .carousel {
   position: relative;
   width: 100%;
-  margin-bottom: 16px;
+  margin-bottom: 60px;
   background: #f5f5f5;
 }
 
@@ -66,49 +69,57 @@ body {
 
 .carousel-dots {
   position: absolute;
-  bottom: 12px;
+  bottom: 16px;
   left: 50%;
   transform: translateX(-50%);
   display: flex;
-  gap: 8px;
+  gap: 10px;
   z-index: 10;
 }
 
 .carousel-dots .dot {
-  width: 8px;
-  height: 8px;
+  width: 9px;
+  height: 9px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.5);
+  background: rgba(255, 255, 255, 0.6);
   cursor: pointer;
   transition: all 0.3s;
 }
 
 .carousel-dots .dot.active {
   background: #ffffff;
-  width: 24px;
-  border-radius: 4px;
+  width: 28px;
+  border-radius: 5px;
 }
 
 /* ========== 六宫格和三宫格 ========== */
 .grid-container {
-  padding: 20px 16px;
+  padding: 0 16px 20px;
   display: grid;
-  gap: 20px;
+  gap: 20px 16px;
 }
 
 .grid-container.grid-6 {
   grid-template-columns: repeat(3, 1fr);
+  row-gap: 35px;
 }
 
 .grid-container.grid-3 {
   grid-template-columns: repeat(3, 1fr);
+  row-gap: 35px;
+}
+
+.grid-container.grid-2 {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 50px;
+  padding: 0 40px 50px;
 }
 
 .grid-item {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
   text-decoration: none;
   color: #333333;
   transition: transform 0.2s;
@@ -121,15 +132,16 @@ body {
 
 /* Logo图标容器 */
 .grid-icon-img {
-  width: 80px;
-  height: 80px;
+  width: 100%;
+  max-width: 130px;
+  aspect-ratio: 1;
   display: flex;
   align-items: center;
   justify-content: center;
   background: #ffffff;
-  border-radius: 12px;
-  padding: 10px;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  border-radius: 18px;
+  padding: 16px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
   transition: all 0.3s;
 }
 
@@ -141,47 +153,51 @@ body {
 
 .grid-item:active .grid-icon-img {
   transform: scale(0.95);
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.18);
 }
 
 /* 圆形图标（视频页使用）*/
 .grid-icon {
-  width: 70px;
-  height: 70px;
+  width: 100%;
+  max-width: 130px;
+  aspect-ratio: 1;
   border-radius: 50%;
   background: #5b7ebd;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
   position: relative;
 }
 
 /* 多边形图标 */
 .blue-polygon-icon {
-  width: 70px;
-  height: 70px;
+  width: 100%;
+  max-width: 130px;
+  aspect-ratio: 1;
   background: #5b7ebd;
   clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
 }
 
 /* 圆形图标 */
 .yellow-circle-icon {
-  width: 70px;
-  height: 70px;
+  width: 100%;
+  max-width: 130px;
+  aspect-ratio: 1;
   border-radius: 50%;
   background: #f5a623;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
 }
 
 /* 青色形状图标 */
 .teal-shape-icon {
-  width: 70px;
-  height: 70px;
+  width: 100%;
+  max-width: 130px;
+  aspect-ratio: 1;
   background: #4a7c7e;
   clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
 }
 
 /* 图标颜色变体 */
@@ -202,10 +218,12 @@ body {
 }
 
 .grid-label {
-  font-size: 14px;
+  font-size: 15px;
   font-weight: 600;
   color: #333333;
   text-align: center;
+  letter-spacing: 0.2px;
+  line-height: 1.3;
 }
 
 /* ========== 底部Logo ========== */
@@ -234,24 +252,27 @@ body {
   position: relative;
   width: 100%;
   margin-bottom: 0;
+  max-height: 280px;
+  overflow: hidden;
 }
 
 .category-header img {
   width: 100%;
-  height: auto;
+  height: 100%;
+  object-fit: cover;
   display: block;
 }
 
 .category-title {
   position: absolute;
-  bottom: 20px;
+  bottom: 24px;
   left: 50%;
   transform: translateX(-50%);
   background: linear-gradient(135deg, #6b9bd1 0%, #5a8bc7 100%);
   color: #ffffff;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 700;
-  padding: 12px 50px;
+  padding: 14px 60px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
   white-space: nowrap;
 }
@@ -267,13 +288,14 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 24px 16px;
+  padding: 35px 16px;
   border-right: 1px solid #e5e5e5;
   border-bottom: 1px solid #e5e5e5;
   text-decoration: none;
   color: #333333;
   transition: background 0.15s;
   cursor: pointer;
+  min-height: 260px;
 }
 
 .product-item:nth-child(2n) {
@@ -285,27 +307,30 @@ body {
 }
 
 .product-item img {
-  width: 120px;
-  height: 140px;
+  width: 140px;
+  height: 165px;
   object-fit: contain;
-  margin-bottom: 12px;
+  margin-bottom: 18px;
+  flex-shrink: 0;
 }
 
 .product-item h3 {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 700;
   color: #333333;
-  margin: 0 0 6px 0;
+  margin: 0 0 8px 0;
   text-align: center;
+  letter-spacing: 0.3px;
+  line-height: 1.3;
 }
 
 .product-item p {
-  font-size: 13px;
+  font-size: 14px;
   font-weight: 400;
   color: #666666;
   margin: 0;
   text-align: center;
-  line-height: 1.4;
+  line-height: 1.5;
 }
 
 /* ========== PDF详情下载页 ========== */
@@ -313,51 +338,56 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 60px 30px;
+  padding: 30px 30px;
   text-align: center;
-  min-height: calc(100vh - 120px);
+  min-height: auto;
+}
+
+.pdf-detail + .pdf-detail {
+  padding-top: 20px;
 }
 
 .pdf-icon {
-  width: 120px;
-  height: 140px;
-  margin-bottom: 30px;
-  filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.1));
+  width: 140px;
+  height: 165px;
+  margin-bottom: 24px;
+  filter: drop-shadow(0 6px 20px rgba(0, 0, 0, 0.12));
 }
 
 .product-info {
-  margin-bottom: 50px;
+  margin-bottom: 24px;
 }
 
 .product-info h2 {
-  font-size: 24px;
+  font-size: 26px;
   font-weight: 700;
   color: #333333;
-  margin: 0 0 8px 0;
-  letter-spacing: 0.5px;
+  margin: 0 0 12px 0;
+  letter-spacing: 0.8px;
 }
 
 .product-info p {
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 400;
   color: #666666;
   margin: 0;
+  line-height: 1.6;
 }
 
 .download-btn {
   width: 100%;
-  max-width: 300px;
-  padding: 16px 32px;
+  max-width: 320px;
+  padding: 18px 40px;
   background: linear-gradient(135deg, #ff8533 0%, #ff6600 100%);
   color: #ffffff;
-  font-size: 16px;
+  font-size: 17px;
   font-weight: 700;
   border: none;
-  border-radius: 8px;
+  border-radius: 10px;
   cursor: pointer;
   transition: transform 0.15s;
-  box-shadow: 0 4px 12px rgba(255, 102, 0, 0.3);
-  letter-spacing: 0.5px;
+  box-shadow: 0 6px 18px rgba(255, 102, 0, 0.35);
+  letter-spacing: 0.8px;
 }
 
 .download-btn:active {
@@ -367,18 +397,18 @@ body {
 /* ========== 视频分类页 ========== */
 .video-category-title {
   background: linear-gradient(135deg, #6b9bd1 0%, #5a8bc7 100%);
-  padding: 16px 20px;
+  padding: 28px 20px;
   text-align: center;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.08);
-  margin-bottom: 2px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  margin-bottom: 0;
 }
 
 .video-category-title h2 {
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 700;
   color: #ffffff;
   margin: 0;
-  letter-spacing: 0.5px;
+  letter-spacing: 1px;
 }
 
 .video-category-grid {
@@ -392,13 +422,14 @@ body {
   display: flex;
   flex-direction: column;
   align-items: center;
-  padding: 24px 16px;
+  padding: 40px 18px;
   border-right: 1px solid #e5e5e5;
   border-bottom: 1px solid #e5e5e5;
   text-decoration: none;
   color: #333333;
   transition: background 0.15s;
   cursor: pointer;
+  min-height: 220px;
 }
 
 .video-category-item:nth-child(2n) {
@@ -410,35 +441,39 @@ body {
 }
 
 .video-category-item img {
-  width: 140px;
-  height: 100px;
+  width: 100%;
+  max-width: 180px;
+  height: auto;
+  aspect-ratio: 16/9;
   object-fit: cover;
-  margin-bottom: 12px;
-  border-radius: 4px;
+  margin-bottom: 18px;
+  border-radius: 6px;
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.12);
 }
 
 .video-category-item h3 {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   color: #333333;
   margin: 0;
   text-align: center;
+  letter-spacing: 0.3px;
 }
 
 /* ========== 视频播放页 ========== */
 .video-list {
   display: flex;
   flex-direction: column;
-  gap: 16px;
-  padding: 16px;
+  gap: 18px;
+  padding: 12px 16px 20px;
   background: #f5f5f5;
 }
 
 .video-item {
   background: #ffffff;
-  border-radius: 8px;
+  border-radius: 10px;
   overflow: hidden;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
   cursor: pointer;
 }
 
@@ -481,33 +516,175 @@ body {
   filter: drop-shadow(0 4px 12px rgba(0, 0, 0, 0.3));
 }
 
+/* 视频控制栏 */
+.video-controls {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 12px 16px;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.7), transparent);
+  opacity: 0;
+  transition: opacity 0.3s;
+  z-index: 20;
+  pointer-events: none;
+}
+
+.video-thumbnail.playing .video-controls {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.control-right {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.control-btn {
+  width: 40px;
+  height: 40px;
+  border: none;
+  background: rgba(255, 255, 255, 0.2);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.2s;
+  backdrop-filter: blur(4px);
+}
+
+.control-btn:hover {
+  background: rgba(255, 255, 255, 0.3);
+  transform: scale(1.1);
+}
+
+.control-btn:active {
+  transform: scale(0.95);
+}
+
+.control-btn svg {
+  pointer-events: none;
+}
+
 .video-item h3 {
-  font-size: 15px;
+  font-size: 16px;
   font-weight: 600;
   color: #333333;
   margin: 0;
-  padding: 14px 16px;
+  padding: 16px 20px;
   background: #ffffff;
   text-align: center;
+  letter-spacing: 0.3px;
 }
 
 /* ========== 响应式适配 ========== */
 @media (max-width: 360px) {
+  .carousel-container {
+    padding-bottom: 56.25%;
+  }
+
+  .grid-icon-img {
+    max-width: 105px;
+    padding: 12px;
+  }
+
   .grid-icon,
   .blue-polygon-icon,
   .yellow-circle-icon,
   .teal-shape-icon {
-    width: 60px;
-    height: 60px;
+    max-width: 105px;
+  }
+
+  .carousel {
+    margin-bottom: 40px;
+  }
+
+  .grid-container {
+    gap: 18px 12px;
+    padding: 0 12px 16px;
+  }
+
+  .grid-container.grid-6 {
+    row-gap: 28px;
+  }
+
+  .grid-container.grid-3 {
+    row-gap: 28px;
+  }
+
+  .grid-container.grid-2 {
+    gap: 35px;
+    padding: 0 24px 40px;
   }
 
   .grid-label {
-    font-size: 13px;
+    font-size: 14px;
+  }
+
+  .product-item {
+    padding: 30px 12px;
+    min-height: 240px;
   }
 
   .product-item img {
-    width: 100px;
-    height: 120px;
+    width: 120px;
+    height: 140px;
+  }
+
+  .product-item h3 {
+    font-size: 15px;
+  }
+
+  .video-category-item {
+    padding: 32px 14px;
+    min-height: 200px;
+  }
+
+  .video-category-item img {
+    max-width: 150px;
+  }
+
+  .video-list {
+    gap: 16px;
+    padding: 16px;
+  }
+
+  .video-item h3 {
+    font-size: 15px;
+    padding: 14px 16px;
+  }
+
+  .pdf-detail {
+    padding: 50px 20px;
+    min-height: auto;
+  }
+
+  .pdf-icon {
+    width: 120px;
+    height: 140px;
+    margin-bottom: 30px;
+  }
+
+  .product-info {
+    margin-bottom: 40px;
+  }
+
+  .product-info h2 {
+    font-size: 22px;
+  }
+
+  .product-info p {
+    font-size: 16px;
+  }
+
+  .download-btn {
+    padding: 16px 32px;
+    font-size: 16px;
   }
 }
 
@@ -518,18 +695,18 @@ body {
   }
 
   .product-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  .product-item:nth-child(3n) {
+  .product-item:nth-child(2n) {
     border-right: none;
   }
 
   .video-category-grid {
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(2, 1fr);
   }
 
-  .video-category-item:nth-child(3n) {
+  .video-category-item:nth-child(2n) {
     border-right: none;
   }
 }

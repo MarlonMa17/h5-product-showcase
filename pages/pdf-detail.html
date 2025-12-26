@@ -7,53 +7,96 @@
     <link rel="stylesheet" href="../css/styles.css">
 </head>
 <body>
-    <div class="container">
-        <!-- PDF详情 -->
-        <div class="pdf-detail">
-            <div class="pdf-icon">
-                <svg viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
-                    <rect x="10" y="0" width="90" height="130" fill="#e74c3c" rx="5"/>
-                    <path d="M 100 0 L 100 30 L 110 30 Z" fill="#c0392b"/>
-                    <text x="60" y="70" font-size="32" fill="white" text-anchor="middle" font-weight="bold">P</text>
-                </svg>
-            </div>
-            <div class="product-info">
-                <h2 id="product-code">UZIN NC 145</h2>
-                <p id="product-name">标准型自流平水泥</p>
-            </div>
-            <button class="download-btn" onclick="downloadPDF()">点击下载产品说明书</button>
-        </div>
+    <div class="container" id="pdf-container">
+        <!-- PDF详情块将通过JavaScript动态生成 -->
     </div>
 
     <script>
         // 获取URL参数
         const urlParams = new URLSearchParams(window.location.search);
-        const productId = urlParams.get('id');
+        const category = urlParams.get('category');
 
-        // 产品数据（包含PDF文件路径）
-        const products = {
-            '1': { code: 'UZIN NC 145', name: '标准型自流平水泥', pdf: '../assets/pdf/UZIN NC 145.pdf' },
-            '2': { code: 'UZIN NC 149', name: '商用型自流平水泥', pdf: '../assets/pdf/UZIN NC 149.pdf' },
-            '3': { code: 'UZIN NC 159', name: '多功能型自流平水泥', pdf: '../assets/pdf/UZIN NC 159.pdf' },
-            '4': { code: 'UZIN NC 169', name: '全能型自流平水泥', pdf: '../assets/pdf/UZIN NC 169.pdf' },
-            '5': { code: 'UZIN NC 182', name: '低坍落度水泥修补砂浆', pdf: '../assets/pdf/UZIN NC 182.pdf' }
+        // 产品数据（按类别组织，每个产品可以有多个PDF文件）
+        const productsByCategory = {
+            '自流平': [
+                {
+                    code: 'UZIN NC 145',
+                    name: '标准型自流平水泥',
+                    pdfs: [
+                        { name: '产品说明书', path: '../assets/pdf/UZIN NC 145.pdf' }
+                    ]
+                },
+                {
+                    code: 'UZIN NC 149',
+                    name: '商用型自流平水泥',
+                    pdfs: [
+                        { name: '产品说明书', path: '../assets/pdf/UZIN NC 149.pdf' }
+                    ]
+                },
+                {
+                    code: 'UZIN NC 159',
+                    name: '多功能型自流平水泥',
+                    pdfs: [
+                        { name: '产品说明书', path: '../assets/pdf/UZIN NC 159.pdf' }
+                    ]
+                }
+            ],
+            '界面剂': [],
+            '胶粘剂': [],
+            '木地板相关': [],
+            'WOLFF': [],
+            'Pajarito': []
         };
 
-        // 更新页面内容
-        if (productId && products[productId]) {
-            document.getElementById('product-code').textContent = products[productId].code;
-            document.getElementById('product-name').textContent = products[productId].name;
+        // 更新页面标题
+        if (category) {
+            document.title = category + ' - UZIN优成';
         }
 
-        // PDF下载/预览功能
-        function downloadPDF() {
-            if (productId && products[productId] && products[productId].pdf) {
-                // 在新窗口打开PDF（浏览器会自动预览）
-                window.open(products[productId].pdf, '_blank');
+        // 生成PDF详情块
+        function generatePDFDetails() {
+            const container = document.getElementById('pdf-container');
+            const products = productsByCategory[category] || [];
+
+            if (products.length === 0) {
+                container.innerHTML = '<div class="pdf-detail"><p style="color: #999;">暂无产品资料</p></div>';
+                return;
+            }
+
+            products.forEach(product => {
+                product.pdfs.forEach(pdf => {
+                    const pdfDetail = document.createElement('div');
+                    pdfDetail.className = 'pdf-detail';
+                    pdfDetail.innerHTML = `
+                        <div class="pdf-icon">
+                            <svg viewBox="0 0 120 140" xmlns="http://www.w3.org/2000/svg">
+                                <rect x="10" y="0" width="90" height="130" fill="#e74c3c" rx="5"/>
+                                <path d="M 100 0 L 100 30 L 110 30 Z" fill="#c0392b"/>
+                                <text x="60" y="70" font-size="32" fill="white" text-anchor="middle" font-weight="bold">PDF</text>
+                            </svg>
+                        </div>
+                        <div class="product-info">
+                            <h2>${product.code}</h2>
+                            <p>${product.name}</p>
+                        </div>
+                        <button class="download-btn" onclick="downloadPDF('${pdf.path}')">点击下载产品说明书</button>
+                    `;
+                    container.appendChild(pdfDetail);
+                });
+            });
+        }
+
+        // PDF下载功能
+        function downloadPDF(pdfPath) {
+            if (pdfPath) {
+                window.open(pdfPath, '_blank');
             } else {
                 alert('PDF文件不存在');
             }
         }
+
+        // 页面加载时生成详情
+        generatePDFDetails();
     </script>
 </body>
 </html>
