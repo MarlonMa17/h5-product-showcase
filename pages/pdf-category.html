@@ -10,7 +10,7 @@
     <div class="container">
         <!-- 类目头图 -->
         <div class="category-header">
-            <img src="../assets/images/pdf/products/头图.png" alt="自流平">
+            <img src="../assets/images/pdf/products/头图.png" alt="自流平" loading="lazy">
             <div class="category-title">
                 <h2>自流平</h2>
             </div>
@@ -62,12 +62,12 @@
                     return;
                 }
 
-                products.forEach(product => {
+                products.forEach((product, index) => {
                     const productLink = document.createElement('a');
                     productLink.href = `pdf-detail.html?category=${encodeURIComponent(category)}&productCode=${encodeURIComponent(product.code)}`;
                     productLink.className = 'product-item';
                     productLink.innerHTML = `
-                        <img src="${product.image}" alt="${product.code}">
+                        <img src="${product.image}" alt="${product.code}" loading="lazy">
                         <h3>${product.code}</h3>
                         <p>${product.name}</p>
                     `;

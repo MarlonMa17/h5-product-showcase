@@ -53,6 +53,9 @@ desktop.ini
 *.bak
 *.log
 
+# 图片压缩脚本（仅本地使用）
+compress_images.py
+
 # Node.js (如果使用)
 node_modules/
 npm-debug.log*

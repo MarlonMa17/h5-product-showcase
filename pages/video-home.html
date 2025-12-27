@@ -39,25 +39,54 @@
                 data.carousels.video.forEach((item, index) => {
                     // 创建轮播图片
                     const slide = document.createElement('div');
-                    slide.className = 'carousel-slide' + (index === 0 ? ' active' : '');
-                    slide.innerHTML = `<img src="${item.image}" alt="${item.alt}">`;
+                    slide.className = 'carousel-slide';
+                    if (index === 0) {
+                        slide.innerHTML = `<img src="${item.image}" alt="${item.alt}">`;
+                    } else {
+                        slide.innerHTML = `<img data-src="${item.image}" alt="${item.alt}" loading="lazy">`;
+                    }
                     carouselContainer.appendChild(slide);
 
                     // 创建指示点
                     const dot = document.createElement('span');
-                    dot.className = 'dot' + (index === 0 ? ' active' : '');
+                    dot.className = 'dot';
                     carouselDots.appendChild(dot);
                 });
 
+                // 添加左右箭头按钮
+                const carousel = document.querySelector('.carousel');
+                if (!carousel.querySelector('.carousel-arrow-left')) {
+                    const prevBtn = document.createElement('button');
+                    prevBtn.className = 'carousel-arrow carousel-arrow-left';
+                    prevBtn.setAttribute('aria-label', '上一张');
+                    prevBtn.innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="15 18 9 12 15 6"></polyline>
+                    </svg>`;
+                    carousel.appendChild(prevBtn);
+
+                    const nextBtn = document.createElement('button');
+                    nextBtn.className = 'carousel-arrow carousel-arrow-right';
+                    nextBtn.setAttribute('aria-label', '下一张');
+                    nextBtn.innerHTML = `<svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="9 18 15 12 9 6"></polyline>
+                    </svg>`;
+                    carousel.appendChild(nextBtn);
+                }
+
+                // 初始化轮播图
+                if (carousel && typeof initCarousel === 'function') {
+                    initCarousel(carousel);
+                }
+
                 // 生成分类网格
                 const gridContainer = document.getElementById('grid-container');
-                data.videoCategories.forEach(category => {
+                data.videoCategories.forEach((category, index) => {
                     const gridItem = document.createElement('a');
                     gridItem.href = `video-category.html?category=${encodeURIComponent(category.name)}`;
                     gridItem.className = 'grid-item';
                     gridItem.innerHTML = `
                         <div class="grid-icon-img">
-                            <img src="${category.logo}" alt="${category.name}">
+                            <img src="${category.logo}" alt="${category.name}" loading="lazy">
                         </div>
                         <span class="grid-label">${category.name}</span>
                     `;

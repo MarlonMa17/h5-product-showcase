@@ -11,18 +11,29 @@
         <!-- 轮播图 -->
         <div class="carousel">
             <div class="carousel-container">
-                <div class="carousel-slide active">
+                <div class="carousel-slide">
                     <img src="assets/images/pdf/carousel/1.jpg" alt="轮播图1">
                 </div>
                 <div class="carousel-slide">
-                    <img src="assets/images/pdf/carousel/2.jpg" alt="轮播图2">
+                    <img data-src="assets/images/pdf/carousel/2.jpg" alt="轮播图2" loading="lazy">
                 </div>
                 <div class="carousel-slide">
-                    <img src="assets/images/pdf/carousel/3.jpg" alt="轮播图3">
+                    <img data-src="assets/images/pdf/carousel/3.jpg" alt="轮播图3" loading="lazy">
                 </div>
             </div>
+            <!-- 左右箭头 -->
+            <button class="carousel-arrow carousel-arrow-left" aria-label="上一张">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="15 18 9 12 15 6"></polyline>
+                </svg>
+            </button>
+            <button class="carousel-arrow carousel-arrow-right" aria-label="下一张">
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <polyline points="9 18 15 12 9 6"></polyline>
+                </svg>
+            </button>
             <div class="carousel-dots">
-                <span class="dot active"></span>
+                <span class="dot"></span>
                 <span class="dot"></span>
                 <span class="dot"></span>
             </div>
@@ -32,13 +43,13 @@
         <div class="grid-container grid-2">
             <a href="pages/pdf-home.html" class="grid-item">
                 <div class="grid-icon-img">
-                    <img src="assets/images/logos/UZIN.png" alt="PDF">
+                    <img src="assets/images/logos/UZIN.png" alt="PDF" loading="lazy">
                 </div>
                 <span class="grid-label">产品资料 PDF</span>
             </a>
             <a href="pages/video-home.html" class="grid-item">
                 <div class="grid-icon-img">
-                    <img src="assets/images/logos/PALLMANN.png" alt="Video">
+                    <img src="assets/images/logos/PALLMANN.png" alt="Video" loading="lazy">
                 </div>
                 <span class="grid-label">产品视频介绍</span>
             </a>
