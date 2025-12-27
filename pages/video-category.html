@@ -8,9 +8,12 @@
 </head>
 <body>
     <div class="container">
-        <!-- 类目标题 -->
-        <div class="video-category-title">
-            <h2>弹性地板</h2>
+        <!-- 类目头图 -->
+        <div class="category-header">
+            <img src="../assets/images/video/categories/背景.jpg" alt="弹性地板" loading="lazy">
+            <div class="category-title">
+                <h2>弹性地板</h2>
+            </div>
         </div>
 
         <!-- 视频分类列表 -->
@@ -38,10 +41,15 @@
                     return;
                 }
 
-                // 更新页面标题
-                const titleElement = document.querySelector('.video-category-title h2');
+                // 更新页面标题和头图
+                const titleElement = document.querySelector('.category-title h2');
+                const headerImage = document.querySelector('.category-header img');
+
                 if (titleElement) {
                     titleElement.textContent = category;
+                }
+                if (headerImage && categoryData.headerImage) {
+                    headerImage.src = categoryData.headerImage;
                 }
                 document.title = category + ' - UZIN优成';
 

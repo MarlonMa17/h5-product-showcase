@@ -62,11 +62,7 @@
           "pdfs": [
             {
               "name": "产品说明书",
-              "path": "../assets/pdf/UZIN NC 145.pdf"
-            },
-            {
-              "name": "产品说明书 - 副本",
-              "path": "../assets/pdf/UZIN NC 145 - 副本.pdf"
+              "path": "../assets/pdf/01 UZIN NC 145 CN.pdf"
             }
           ]
         },
@@ -77,7 +73,7 @@
           "pdfs": [
             {
               "name": "产品说明书",
-              "path": "../assets/pdf/UZIN NC 149.pdf"
+              "path": "../assets/pdf/02 UZIN NC 149 CN.pdf"
             }
           ]
         },
@@ -88,7 +84,7 @@
           "pdfs": [
             {
               "name": "产品说明书",
-              "path": "../assets/pdf/UZIN NC 159.pdf"
+              "path": "../assets/pdf/03 UZIN NC 159 CN.pdf"
             }
           ]
         },
@@ -99,7 +95,7 @@
           "pdfs": [
             {
               "name": "产品说明书",
-              "path": "../assets/pdf/UZIN NC 169.pdf"
+              "path": "../assets/pdf/04 UZIN NC 169 CN.pdf"
             }
           ]
         },
@@ -110,7 +106,7 @@
           "pdfs": [
             {
               "name": "产品说明书",
-              "path": "../assets/pdf/UZIN NC 182.pdf"
+              "path": "../assets/pdf/05 UZIN NC 182 CN.pdf"
             }
           ]
         }
@@ -145,6 +141,7 @@
     {
       "name": "弹性地板",
       "logo": "../assets/images/logos/UZIN.png",
+      "headerImage": "../assets/images/video/categories/背景.jpg",
       "subcategories": [
         {
           "name": "界面剂",
@@ -207,11 +204,13 @@
     {
       "name": "木地板",
       "logo": "../assets/images/logos/PALLMANN.png",
+      "headerImage": "../assets/images/video/categories/背景.jpg",
       "subcategories": []
     },
     {
       "name": "工具",
       "logo": "../assets/images/logos/WOLFF.png",
+      "headerImage": "../assets/images/video/categories/背景.jpg",
       "subcategories": []
     }
   ]
