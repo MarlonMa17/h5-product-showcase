@@ -80,36 +80,18 @@
             }
         }
 
-        // PDF查看/下载功能
+        // PDF查看/下载功能 - 使用相对路径，适合微信内预览
         function downloadPDF(pdfPath, productCode) {
             if (!pdfPath) {
                 alert('PDF文件不存在');
                 return;
             }
 
-            // 检测是否在微信中
-            const isWeixin = /MicroMessenger/i.test(navigator.userAgent);
-            // 检测是否是iOS
-            const isIOS = /iPhone|iPad|iPod/i.test(navigator.userAgent);
-
-            // iOS微信：使用相对路径，在微信内置预览器中打开（用户可以分享/保存）
-            if (isWeixin && isIOS) {
-                window.location.href = pdfPath;
-                return;
-            }
-
-            // Android微信或其他浏览器：使用OSS绝对路径
-            // 如果换域名，只需修改下面这一行的 ossBaseUrl
-            const ossBaseUrl = 'https://company-product-test-hk.oss-cn-hongkong.aliyuncs.com';
-
-            // 如果已经是绝对路径（http开头），直接使用；否则转换为绝对路径
-            const absolutePath = pdfPath.startsWith('http')
-                ? pdfPath
-                : ossBaseUrl + '/' + pdfPath.replace('../', '');
-
-            // Android微信：会提示复制链接到浏览器
+            // 直接打开PDF（相对路径）
+            // iOS微信：在微信内置预览器中打开
+            // Android微信：在微信内置预览器中打开
             // 其他浏览器：直接打开
-            window.location.href = absolutePath;
+            window.location.href = pdfPath;
         }
 
         // 页面加载时执行
