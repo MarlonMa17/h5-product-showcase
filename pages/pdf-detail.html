@@ -70,7 +70,7 @@
                             <p>${product.name}</p>
                             ${pdfs.length > 1 ? `<p style="color: #666; font-size: 14px;">${pdf.name || '文档 ' + (index + 1)}</p>` : ''}
                         </div>
-                        <button class="download-btn" onclick="downloadPDF('${pdf.path}')">点击下载产品说明书</button>
+                        <button class="download-btn" onclick="downloadPDF('${pdf.path}', '${product.code}')">点击下载产品说明书</button>
                     `;
                     container.appendChild(pdfDetail);
                 });
@@ -80,12 +80,41 @@
             }
         }
 
-        // PDF下载功能
-        function downloadPDF(pdfPath) {
-            if (pdfPath) {
-                window.open(pdfPath, '_blank');
-            } else {
+        // PDF下载功能 - 通过fetch下载并触发保存
+        async function downloadPDF(pdfPath, productCode) {
+            if (!pdfPath) {
                 alert('PDF文件不存在');
+                return;
+            }
+
+            try {
+                // 获取PDF文件
+                const response = await fetch(pdfPath);
+                if (!response.ok) {
+                    throw new Error('PDF文件加载失败');
+                }
+
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+
+                // 创建临时下载链接
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                a.download = `${productCode}_产品说明书.pdf`;
+
+                document.body.appendChild(a);
+                a.click();
+
+                // 清理
+                setTimeout(() => {
+                    document.body.removeChild(a);
+                    window.URL.revokeObjectURL(url);
+                }, 100);
+            } catch (error) {
+                console.error('下载失败:', error);
+                // 如果下载失败，回退到直接打开
+                window.location.href = pdfPath;
             }
         }
 
