@@ -68,7 +68,7 @@
                     videoItem.className = `video-item ${video.orientation === 'vertical' ? 'vertical-video' : 'horizontal-video'}`;
                     videoItem.innerHTML = `
                         <div class="video-thumbnail">
-                            <video data-src="${video.path}" preload="metadata"></video>
+                            <video data-src="${video.path}" ${video.poster ? `poster="${video.poster}"` : ''} preload="metadata"></video>
                             <div class="play-button">
                                 <svg width="60" height="60" viewBox="0 0 60 60">
                                     <circle cx="30" cy="30" r="28" fill="rgba(0,0,0,0.6)" stroke="white" stroke-width="2"/>

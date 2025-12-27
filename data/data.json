@@ -150,37 +150,44 @@
             {
               "title": "湿度测试V1D4+CM",
               "path": "../assets/videos/01 湿度测试V1D4_CM.mp4",
-              "orientation": "vertical"
+              "orientation": "vertical",
+              "poster": "../assets/images/video/posters/01 湿度测试V1D4_CM.jpg"
             },
             {
               "title": "UZIN PE 360 PLUS",
               "path": "../assets/videos/02 UZIN PE 360 PLUS.mp4",
-              "orientation": "horizontal"
+              "orientation": "horizontal",
+              "poster": "../assets/images/video/posters/02 UZIN PE 360 PLUS.jpg"
             },
             {
               "title": "UZIN PE 460",
               "path": "../assets/videos/03 UZIN PE 460.mp4",
-              "orientation": "horizontal"
+              "orientation": "horizontal",
+              "poster": "../assets/images/video/posters/03 UZIN PE 460.jpg"
             },
             {
               "title": "UZIN PE 280",
               "path": "../assets/videos/04 UZIN PE 280.mp4",
-              "orientation": "horizontal"
+              "orientation": "horizontal",
+              "poster": "../assets/images/video/posters/04 UZIN PE 280.jpg"
             },
             {
               "title": "PE480+PE280",
               "path": "../assets/videos/05 PE480_PE280.mp4",
-              "orientation": "horizontal"
+              "orientation": "horizontal",
+              "poster": "../assets/images/video/posters/05 PE480_PE280.jpg"
             },
             {
               "title": "PE360+RR203+NC182",
               "path": "../assets/videos/06 PE360_RR203_NC182.mp4",
-              "orientation": "horizontal"
+              "orientation": "horizontal",
+              "poster": "../assets/images/video/posters/06 PE360_RR203_NC182.jpg"
             },
             {
               "title": "KR516",
               "path": "../assets/videos/08 KR516.mp4",
-              "orientation": "horizontal"
+              "orientation": "horizontal",
+              "poster": "../assets/images/video/posters/08 KR516.jpg"
             }
           ]
         },
