@@ -64,7 +64,7 @@
 
                 products.forEach(product => {
                     const productLink = document.createElement('a');
-                    productLink.href = `pdf-detail.html?category=${encodeURIComponent(category)}`;
+                    productLink.href = `pdf-detail.html?category=${encodeURIComponent(category)}&productCode=${encodeURIComponent(product.code)}`;
                     productLink.className = 'product-item';
                     productLink.innerHTML = `
                         <img src="${product.image}" alt="${product.code}">

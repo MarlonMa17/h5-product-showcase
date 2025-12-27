@@ -68,12 +68,22 @@
                     videoItem.className = `video-item ${video.orientation === 'vertical' ? 'vertical-video' : 'horizontal-video'}`;
                     videoItem.innerHTML = `
                         <div class="video-thumbnail">
-                            <video src="${video.path}"></video>
+                            <video src="${video.path}" preload="metadata"></video>
                             <div class="play-button">
                                 <svg width="60" height="60" viewBox="0 0 60 60">
                                     <circle cx="30" cy="30" r="28" fill="rgba(0,0,0,0.6)" stroke="white" stroke-width="2"/>
                                     <polygon points="23,18 23,42 42,30" fill="white"/>
                                 </svg>
+                            </div>
+                            <div class="video-progress-container">
+                                <div class="progress-bar">
+                                    <div class="progress-filled"></div>
+                                    <div class="progress-handle"></div>
+                                </div>
+                                <div class="time-display">
+                                    <span class="current-time">0:00</span>
+                                    <span class="duration">0:00</span>
+                                </div>
                             </div>
                             <div class="video-controls">
                                 <button class="control-btn pause-btn" title="暂停">
@@ -118,6 +128,22 @@
             const pauseBtn = item.querySelector('.pause-btn');
             const muteBtn = item.querySelector('.mute-btn');
             const fullscreenBtn = item.querySelector('.fullscreen-btn');
+            const progressBar = item.querySelector('.progress-bar');
+            const progressFilled = item.querySelector('.progress-filled');
+            const progressHandle = item.querySelector('.progress-handle');
+            const currentTimeDisplay = item.querySelector('.current-time');
+            const durationDisplay = item.querySelector('.duration');
+
+            // 视频加载错误处理
+            video.addEventListener('error', function(e) {
+                console.error('视频加载失败:', video.src, e);
+                playButton.innerHTML = `
+                    <div style="color: white; text-align: center; padding: 20px; background: rgba(0,0,0,0.6); border-radius: 10px;">
+                        <p>视频加载失败</p>
+                        <p style="font-size: 12px; margin-top: 8px;">请检查网络或文件路径</p>
+                    </div>
+                `;
+            });
 
             // 点击视频区域播放/暂停
             thumbnail.addEventListener('click', function(e) {
@@ -132,7 +158,10 @@
                             v.closest('.video-thumbnail').classList.remove('playing');
                         }
                     });
-                    video.play();
+                    video.play().catch(err => {
+                        console.error('播放失败:', err);
+                        alert('视频播放失败，请重试');
+                    });
                 } else {
                     video.pause();
                 }
@@ -227,6 +256,86 @@
                 }
             }
 
+            // 格式化时间显示
+            function formatTime(seconds) {
+                if (isNaN(seconds)) return '0:00';
+                const mins = Math.floor(seconds / 60);
+                const secs = Math.floor(seconds % 60);
+                return `${mins}:${secs.toString().padStart(2, '0')}`;
+            }
+
+            // 更新进度条
+            function updateProgress() {
+                const percent = (video.currentTime / video.duration) * 100 || 0;
+                progressFilled.style.width = percent + '%';
+                progressHandle.style.left = percent + '%';
+                currentTimeDisplay.textContent = formatTime(video.currentTime);
+            }
+
+            // 进度条拖拽功能
+            let isDragging = false;
+
+            function seek(e) {
+                const rect = progressBar.getBoundingClientRect();
+                const pos = (e.clientX - rect.left) / rect.width;
+                const seekTime = pos * video.duration;
+                if (!isNaN(seekTime)) {
+                    video.currentTime = seekTime;
+                    updateProgress();
+                }
+            }
+
+            progressBar.addEventListener('mousedown', function(e) {
+                isDragging = true;
+                seek(e);
+            });
+
+            document.addEventListener('mousemove', function(e) {
+                if (isDragging) {
+                    seek(e);
+                }
+            });
+
+            document.addEventListener('mouseup', function() {
+                isDragging = false;
+            });
+
+            progressBar.addEventListener('click', function(e) {
+                if (!isDragging) {
+                    seek(e);
+                }
+            });
+
+            // 触摸设备支持
+            progressBar.addEventListener('touchstart', function(e) {
+                isDragging = true;
+                const touch = e.touches[0];
+                const rect = progressBar.getBoundingClientRect();
+                const pos = (touch.clientX - rect.left) / rect.width;
+                const seekTime = pos * video.duration;
+                if (!isNaN(seekTime)) {
+                    video.currentTime = seekTime;
+                    updateProgress();
+                }
+            });
+
+            progressBar.addEventListener('touchmove', function(e) {
+                if (isDragging) {
+                    const touch = e.touches[0];
+                    const rect = progressBar.getBoundingClientRect();
+                    const pos = (touch.clientX - rect.left) / rect.width;
+                    const seekTime = pos * video.duration;
+                    if (!isNaN(seekTime)) {
+                        video.currentTime = seekTime;
+                        updateProgress();
+                    }
+                }
+            });
+
+            progressBar.addEventListener('touchend', function() {
+                isDragging = false;
+            });
+
             // 视频事件监听
             video.addEventListener('play', function() {
                 playButton.style.display = 'none';
@@ -242,6 +351,20 @@
 
             video.addEventListener('volumechange', function() {
                 updateMuteIcon();
+            });
+
+            video.addEventListener('timeupdate', function() {
+                updateProgress();
+            });
+
+            video.addEventListener('loadedmetadata', function() {
+                durationDisplay.textContent = formatTime(video.duration);
+                currentTimeDisplay.textContent = formatTime(0);
+            });
+
+            video.addEventListener('ended', function() {
+                video.currentTime = 0;
+                updateProgress();
             });
 
             // 全屏变化监听
