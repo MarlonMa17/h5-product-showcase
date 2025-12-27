@@ -80,18 +80,42 @@
             }
         }
 
-        // PDF查看/下载功能 - 使用相对路径，适合微信内预览
-        function downloadPDF(pdfPath, productCode) {
+        // PDF下载功能 - 通过fetch下载并触发保存
+        async function downloadPDF(pdfPath, productCode) {
             if (!pdfPath) {
                 alert('PDF文件不存在');
                 return;
             }
 
-            // 直接打开PDF（相对路径）
-            // iOS微信：在微信内置预览器中打开
-            // Android微信：在微信内置预览器中打开
-            // 其他浏览器：直接打开
-            window.location.href = pdfPath;
+            try {
+                // 获取PDF文件
+                const response = await fetch(pdfPath);
+                if (!response.ok) {
+                    throw new Error('PDF文件加载失败');
+                }
+
+                const blob = await response.blob();
+                const url = window.URL.createObjectURL(blob);
+
+                // 创建临时下载链接
+                const a = document.createElement('a');
+                a.style.display = 'none';
+                a.href = url;
+                a.download = `${productCode}_产品说明书.pdf`;
+
+                document.body.appendChild(a);
+                a.click();
+
+                // 清理
+                setTimeout(() => {
+                    document.body.removeChild(a);
+                    window.URL.revokeObjectURL(url);
+                }, 100);
+            } catch (error) {
+                console.error('下载失败:', error);
+                // 如果下载失败，回退到直接打开
+                window.location.href = pdfPath;
+            }
         }
 
         // 页面加载时执行
