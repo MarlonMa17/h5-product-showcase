@@ -152,7 +152,7 @@
           "videos": [
             {
               "title": "湿度测试V1D4+CM",
-              "path": "../assets/videos/01 湿度测试V1D4+CM.mp4",
+              "path": "../assets/videos/01 湿度测试V1D4_CM.mp4",
               "orientation": "vertical"
             },
             {
@@ -172,12 +172,12 @@
             },
             {
               "title": "PE480+PE280",
-              "path": "../assets/videos/05 PE480+PE280.mp4",
+              "path": "../assets/videos/05 PE480_PE280.mp4",
               "orientation": "horizontal"
             },
             {
               "title": "PE360+RR203+NC182",
-              "path": "../assets/videos/06 PE360+RR203+NC182.mp4",
+              "path": "../assets/videos/06 PE360_RR203_NC182.mp4",
               "orientation": "horizontal"
             },
             {

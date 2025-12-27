@@ -68,7 +68,7 @@
                     videoItem.className = `video-item ${video.orientation === 'vertical' ? 'vertical-video' : 'horizontal-video'}`;
                     videoItem.innerHTML = `
                         <div class="video-thumbnail">
-                            <video src="${video.path}" preload="metadata"></video>
+                            <video data-src="${video.path}" preload="none"></video>
                             <div class="play-button">
                                 <svg width="60" height="60" viewBox="0 0 60 60">
                                     <circle cx="30" cy="30" r="28" fill="rgba(0,0,0,0.6)" stroke="white" stroke-width="2"/>
@@ -134,15 +134,36 @@
             const currentTimeDisplay = item.querySelector('.current-time');
             const durationDisplay = item.querySelector('.duration');
 
+            // 懒加载视频
+            function loadVideo() {
+                if (!video.src && video.dataset.src) {
+                    console.log('开始加载视频:', video.dataset.src);
+                    playButton.innerHTML = `
+                        <div style="color: white; text-align: center; padding: 20px; background: rgba(0,0,0,0.6); border-radius: 10px;">
+                            <p>加载中...</p>
+                        </div>
+                    `;
+                    video.src = video.dataset.src;
+                    video.load();
+                }
+            }
+
             // 视频加载错误处理
             video.addEventListener('error', function(e) {
                 console.error('视频加载失败:', video.src, e);
                 playButton.innerHTML = `
-                    <div style="color: white; text-align: center; padding: 20px; background: rgba(0,0,0,0.6); border-radius: 10px;">
+                    <div style="color: white; text-align: center; padding: 20px; background: rgba(0,0,0,0.6); border-radius: 10px; max-width: 250px;">
                         <p>视频加载失败</p>
-                        <p style="font-size: 12px; margin-top: 8px;">请检查网络或文件路径</p>
+                        <p style="font-size: 12px; margin-top: 8px;">文件: ${video.dataset.src}</p>
+                        <p style="font-size: 12px; margin-top: 4px;">请检查文件是否存在</p>
                     </div>
                 `;
+                playButton.style.display = 'flex';
+            });
+
+            // 视频加载完成
+            video.addEventListener('loadeddata', function() {
+                console.log('视频加载成功:', video.src);
             });
 
             // 点击视频区域播放/暂停
@@ -151,6 +172,9 @@
                 if (e.target.closest('.control-btn')) return;
 
                 if (video.paused) {
+                    // 先加载视频（如果还没加载）
+                    loadVideo();
+
                     // 暂停所有其他视频
                     document.querySelectorAll('video').forEach(v => {
                         if (v !== video) {
@@ -158,6 +182,8 @@
                             v.closest('.video-thumbnail').classList.remove('playing');
                         }
                     });
+
+                    // 播放视频
                     video.play().catch(err => {
                         console.error('播放失败:', err);
                         alert('视频播放失败，请重试');
@@ -171,6 +197,7 @@
             pauseBtn.addEventListener('click', function(e) {
                 e.stopPropagation();
                 if (video.paused) {
+                    loadVideo();
                     video.play();
                 } else {
                     video.pause();
