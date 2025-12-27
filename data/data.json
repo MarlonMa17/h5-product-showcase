@@ -173,13 +173,13 @@
             },
             {
               "title": "PE480+PE280",
-              "path": "../assets/videos/05 PE480_PE280.mp4",
+              "path": "../assets/videos/05 PE480_PE280_h264.mp4",
               "orientation": "horizontal",
               "poster": "../assets/images/video/posters/05 PE480_PE280.jpg"
             },
             {
               "title": "PE360+RR203+NC182",
-              "path": "../assets/videos/06 PE360_RR203_NC182.mp4",
+              "path": "../assets/videos/06 PE360_RR203_NC182_h264.mp4",
               "orientation": "horizontal",
               "poster": "../assets/images/video/posters/06 PE360_RR203_NC182.jpg"
             },
